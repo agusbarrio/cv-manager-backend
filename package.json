@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate": "npx sequelize db:migrate",
+    "install:migrate": "npm install && npm run migrate"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/agusbarrio/cv-manager-backend/issues"
   },
-  "homepage": "https://github.com/agusbarrio/cv-manager-backend#readme"
+  "homepage": "https://github.com/agusbarrio/cv-manager-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.26.0",
+    "sequelize-cli": "^6.5.2"
+  }
 }
