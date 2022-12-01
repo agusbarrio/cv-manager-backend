@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "migrate": "npx sequelize db:migrate",
-    "install:migrate": "npm install && npm run migrate"
+    "install:migrate": "npm install && npm run migrate",
+    "add-migration": "npx sequelize migration:generate --name"
   },
   "repository": {
     "type": "git",
