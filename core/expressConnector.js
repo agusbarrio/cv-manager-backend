@@ -28,7 +28,7 @@ function createEndpoint(method, path, middlewares = []) {
 
 /**
  * @param {Object} res res from (req, res, next) params
- * @param {Object} data object to send
+ * @param {Object} data data to send
  * @returns
  */
 function sendJSON(res, data = {}) {
