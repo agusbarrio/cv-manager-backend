@@ -1,0 +1,28 @@
+{
+  "dbModel": {
+    "displayName": "dbModel",
+    "questions": {
+      "name": "Table name"
+    },
+    "files": [
+      {
+        "name": "dbModel.js",
+        "content": [
+          "'use strict';",
+          "const { dbConnector } = require('../../core');",
+          "const { createModel, DataTypes } = dbConnector;",
+          "",
+          "class DbModel {",
+          "  Model = createModel('{{name}}', {",
+          "    example: DataTypes.STRING,",
+          "  });",
+          "",
+          "  associate(models) {}",
+          "}",
+          "",
+          "module.exports = DbModel;"
+        ]
+      }
+    ]
+  }
+}

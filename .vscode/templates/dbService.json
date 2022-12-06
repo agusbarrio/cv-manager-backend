@@ -1,0 +1,24 @@
+{
+  "dbService": {
+    "displayName": "dbService",
+    "files": [
+      {
+        "name": "dbService.js",
+        "content": [
+          "'use strict';",
+          "const {",
+          "  dbConnector: { models },",
+          "} = require('../../core');",
+          "",
+          "const dbService = {",
+          "  example: async () => {",
+          "    return await models.Example.findAll();",
+          "  },",
+          "};",
+          "",
+          "module.exports = dbService;"
+        ]
+      }
+    ]
+  }
+}

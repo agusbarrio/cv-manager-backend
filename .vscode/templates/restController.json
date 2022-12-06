@@ -1,0 +1,29 @@
+{
+  "restController": {
+    "displayName": "restController",
+    "files": [
+      {
+        "name": "restController.js",
+        "content": [
+          "'use strict';",
+          "const { DefaultRestController } = require('../../core');",
+          "const service = require('./service');",
+          "",
+          "class RestController extends DefaultRestController {",
+          "  constructor(moduleName) {",
+          "    super(moduleName);",
+          "    this.createEndpoint('get', '/example', this.example);",
+          "  }",
+          "",
+          "  example = async (req, res, next) => {",
+          "    service.example()",
+          "    this.sendMessage(res, 'Example');",
+          "  };",
+          "}",
+          "",
+          "module.exports = RestController;"
+        ]
+      }
+    ]
+  }
+}

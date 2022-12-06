@@ -1,0 +1,14 @@
+{
+  "module-templates.engine": "handlebars",
+  "module-templates.templateFiles": [
+    "./templates/dbModel.json",
+    "./templates/dbService.json",
+    "./templates/service.json",
+    "./templates/restController.json"
+  ],
+
+  "search.exclude": {
+    "**/node_modules/**": true,
+    "**/.vscode/**": true
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "service": {
+    "displayName": "service",
+    "files": [
+      {
+        "name": "service.js",
+        "content": [
+          "'use strict';",
+          "const dbService = require('./dbService');",
+          "",
+          "const service = {",
+          "  example: async () => {",
+          "    return await dbService.example();",
+          "  },",
+          "};",
+          "",
+          "module.exports = service;"
+        ]
+      }
+    ]
+  }
+}
