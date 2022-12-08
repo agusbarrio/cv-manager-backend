@@ -1,18 +1,23 @@
 {
   "dbService": {
     "displayName": "dbService",
+    "questions": {
+      "modelName": "Model name"
+    },
     "files": [
       {
         "name": "dbService.js",
         "content": [
           "'use strict';",
           "const {",
-          "  dbConnector: { models },",
+          "  dbConnector: {",
+          "    models: { {{modelName}} },",
+          "  },",
           "} = require('../../core');",
           "",
           "const dbService = {",
-          "  example: async () => {",
-          "    return await models.Example.findAll();",
+          "  example: async function () {",
+          "    return await {{modelName}}.findAll();",
           "  },",
           "};",
           "",

@@ -9,7 +9,7 @@
           "const dbService = require('./dbService');",
           "",
           "const service = {",
-          "  example: async () => {",
+          "  example: async function () {",
           "    return await dbService.example();",
           "  },",
           "};",
