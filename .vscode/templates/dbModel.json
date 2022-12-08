@@ -2,7 +2,8 @@
   "dbModel": {
     "displayName": "dbModel",
     "questions": {
-      "name": "Table name"
+      "modelName": "Model name",
+      "tableName": "Table name"
     },
     "files": [
       {
@@ -13,9 +14,13 @@
           "const { createModel, DataTypes } = dbConnector;",
           "",
           "class DbModel {",
-          "  Model = createModel('{{name}}', {",
-          "    example: DataTypes.STRING,",
-          "  });",
+          "  Model = createModel(",
+          "    '{{modelName}}',",
+          "    {",
+          "      example: DataTypes.STRING,",
+          "    },",
+          "    { tableName: '{{tableName}}' }",
+          "  );",
           "",
           "  associate(models) {}",
           "}",

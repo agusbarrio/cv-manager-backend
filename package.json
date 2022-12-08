@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "migrate": "npx sequelize db:migrate",
+    "migrate": "sequelize db:migrate",
     "install:migrate": "npm install && npm run migrate",
-    "add-migration": "npx sequelize migration:generate --name",
+    "add-migration": "sequelize migration:generate --name",
     "dev": "nodemon server.js"
   },
   "repository": {
