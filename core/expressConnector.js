@@ -66,9 +66,17 @@ function initExpressApp(app) {
   // Error response & logger
   app.use((error, req, res, next) => {
     console.log(error.stack);
-    res
-      .status(error.statusCode || ERRORS.E500.statusCode)
-      .send(error.msg ? error : ERRORS.E500);
+    const resError = {
+      msg: error.msg || ERRORS.E500.msg,
+      errorCode: error.errorCode || ERRORS.E500.errorCode,
+      statusCode: error.statusCode || ERRORS.E500.statusCode,
+      info: error.info,
+    };
+    if (error.statusCode === ERRORS.E400.statusCode) {
+      resError.msg = ERRORS.E400.msg;
+      resError.errorCode = ERRORS.E400.errorCode;
+    }
+    res.status(resError.statusCode).send(resError);
   });
 
   return app;

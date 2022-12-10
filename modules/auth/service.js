@@ -13,7 +13,8 @@ const service = {
   },
   register: async function ({ email, password }) {
     const emailAvaible = !(await usersDbService.getOneByEmail(email));
-    if (!emailAvaible) throw ERRORS.E409;
+    if (!emailAvaible)
+      throw ERRORS.CONFLICT_ERROR('email', 'This user already exists');
     const encryptedPassword = this.getEncryptedPassword(password);
     await usersDbService.create({ email, password: encryptedPassword });
     return true;
