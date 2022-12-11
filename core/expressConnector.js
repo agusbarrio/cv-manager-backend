@@ -17,6 +17,7 @@ const routes = { post: [], put: [], get: [], delete: [] };
 function createEndpoint(method, path, middlewares = []) {
   if (typeof middlewares === 'function') middlewares = [middlewares];
   middlewares = middlewares.map((middleware) => async (req, res, next) => {
+    res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
     try {
       await middleware(req, res, next);
     } catch (err) {

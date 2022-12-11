@@ -9,6 +9,7 @@ class RestController extends DefaultRestController {
     super(moduleName);
     this.createEndpoint('post', '/register', this.register);
     this.createEndpoint('post', '/login', this.login);
+    this.createEndpoint('get', '/logout', this.logout);
   }
 
   register = async (req, res, next) => {
@@ -18,8 +19,8 @@ class RestController extends DefaultRestController {
       password: validator.password(),
     });
     await validator.validate(schema, { email, password });
-    const result = await service.register({ email, password });
-    res.json(result);
+    await service.register({ email, password });
+    res.ok();
   };
 
   login = async (req, res, next) => {
@@ -35,6 +36,11 @@ class RestController extends DefaultRestController {
       httpOnly: true,
     });
     res.json({ token });
+  };
+
+  logout = async (req, res, next) => {
+    res.clearCookie('token');
+    res.ok();
   };
 }
 
