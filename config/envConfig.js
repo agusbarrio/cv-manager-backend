@@ -5,6 +5,7 @@ module.exports = {
   //Required
   MYSQL_CONNECTION: pe.MYSQL_CONNECTION,
   SECRET_KEY_ENCRYPTION: pe.SECRET_KEY_ENCRYPTION,
+  JWT_SECRET: pe.JWT_SECRET,
   //Optional
   LOGGING: pe.LOGGING || false,
   PORT: pe.PORT || 8080,

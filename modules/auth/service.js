@@ -1,8 +1,11 @@
 'use strict';
 const { createHmac } = require('node:crypto');
+const jwt = require('jsonwebtoken');
 const usersDbService = require('../users/dbService');
+const { LOGIN_TOKEN_DURATION } = require('./constants');
 const { ERRORS } = require('../../core');
 const { envConfig } = require('../../config');
+
 const service = {
   getEncryptedPassword: function (password) {
     return password
@@ -11,6 +14,9 @@ const service = {
           .digest('base64')
       : undefined;
   },
+  comparePassword: function (passwordPlain, hashPassword) {
+    return this.getEncryptedPassword(passwordPlain) === hashPassword;
+  },
   register: async function ({ email, password }) {
     const emailAvaible = !(await usersDbService.getOneByEmail(email));
     if (!emailAvaible)
@@ -18,6 +24,16 @@ const service = {
     const encryptedPassword = this.getEncryptedPassword(password);
     await usersDbService.create({ email, password: encryptedPassword });
     return true;
+  },
+  login: async function ({ email, password }) {
+    const user = await usersDbService.getOneByEmail(email, ['id', 'password']);
+    if (!user) throw ERRORS.E401;
+    const isValidPassword = this.comparePassword(password, user.password);
+    if (!isValidPassword) throw ERRORS.E401;
+    const token = jwt.sign({ id: user.id }, envConfig.JWT_SECRET, {
+      expiresIn: LOGIN_TOKEN_DURATION,
+    });
+    return token;
   },
 };
 

@@ -7,8 +7,6 @@ class DefaultRestController {
   createEndpoint(method, path, middlewares = []) {
     createEndpoint(method, `/${this.moduleName}${path}`, middlewares);
   }
-  sendJSON = sendJSON;
-  sendMessage = sendMessage;
 }
 
 module.exports = DefaultRestController;

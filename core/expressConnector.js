@@ -26,24 +26,6 @@ function createEndpoint(method, path, middlewares = []) {
   return routes[method.toLowerCase()].push({ path, middlewares });
 }
 
-/**
- * @param {Object} res res from (req, res, next) params
- * @param {Object} data data to send
- * @returns
- */
-function sendJSON(res, data = {}) {
-  return res.json(data);
-}
-
-/**
- * @param {Object} res res from (req, res, next) params
- * @param {Object} msg message to send
- * @returns
- */
-function sendMessage(res, msg = '') {
-  return res.send(msg);
-}
-
 function initExpressApp(app) {
   //middlewares
   app.use(helmet());
@@ -76,10 +58,10 @@ function initExpressApp(app) {
       resError.msg = ERRORS.E400.msg;
       resError.errorCode = ERRORS.E400.errorCode;
     }
-    res.status(resError.statusCode).send(resError);
+    res.status(resError.statusCode).json(resError);
   });
 
   return app;
 }
 
-module.exports = { initExpressApp, createEndpoint, sendJSON, sendMessage };
+module.exports = { initExpressApp, createEndpoint };
