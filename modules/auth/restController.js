@@ -23,7 +23,7 @@ class RestController extends DefaultRestController {
     res.ok();
   };
 
-  login = async (req, res, next) => {
+  login = async (req, res, next, context) => {
     const { email, password } = req.body;
     const schema = validator.createSchema({
       email: validator.email(),
@@ -38,7 +38,7 @@ class RestController extends DefaultRestController {
     res.json({ token });
   };
 
-  logout = async (req, res, next) => {
+  logout = async (req, res, next, context) => {
     res.clearCookie('token');
     res.ok();
   };

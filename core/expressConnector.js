@@ -5,25 +5,43 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const ERRORS = require('./errors');
 const { envConfig } = require('../config');
-
+const authUtils = require('../modules/auth/utils');
 const routes = { post: [], put: [], get: [], delete: [] };
 
 /**
  * @param {String} method get, put, post, delete, etc
  * @param {String} path Ej: "/users"
- * @param {(Function|Array.<Function>)} middlewares Array of functions (req, res, next) => {...} or function
+ * @param {(Function|Array.<Function>)} handlers Array of functions (req, res, next) => {...} or function
  * @returns
  */
-function createEndpoint(method, path, middlewares = []) {
-  if (typeof middlewares === 'function') middlewares = [middlewares];
+function createEndpoint(
+  method,
+  path,
+  handlers = [],
+  options = { needToken: false }
+) {
+  let middlewares = [];
+  const context = {};
+  if (typeof handlers === 'function') middlewares.push(handlers);
+
+  if (options.needToken) {
+    middlewares.unshift(async (req, res, next) => {
+      const token = req.cookies.token;
+      const decodedToken = authUtils.validToken(token);
+      context.user = { id: decodedToken.id };
+      next();
+    });
+  }
+
   middlewares = middlewares.map((middleware) => async (req, res, next) => {
     res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
     try {
-      await middleware(req, res, next);
+      await middleware(req, res, next, context);
     } catch (err) {
       next(err);
     }
   });
+
   return routes[method.toLowerCase()].push({ path, middlewares });
 }
 
