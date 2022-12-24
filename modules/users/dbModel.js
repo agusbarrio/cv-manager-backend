@@ -16,7 +16,7 @@ class DbModel {
         allowNull: false,
       },
     },
-    { tableName: 'users' }
+    { tableName: 'users', timestamps: false }
   );
 
   associate(models) {}
