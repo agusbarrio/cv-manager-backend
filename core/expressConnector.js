@@ -2,12 +2,13 @@
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const ERRORS = require('./errors');
 const { envConfig } = require('../config');
 const authUtils = require('../modules/auth/utils');
 const routes = { post: [], put: [], get: [], delete: [] };
-
+const _ = require('lodash');
 /**
  * @param {String} method get, put, post, delete, etc
  * @param {String} path Ej: "/users"
@@ -22,7 +23,8 @@ function createEndpoint(
 ) {
   let middlewares = [];
   const context = {};
-  if (typeof handlers === 'function') middlewares.push(handlers);
+  if (_.isFunction(handlers)) middlewares.push(handlers);
+  if (_.isArray(handlers)) middlewares.push(...handlers);
 
   if (options.needToken) {
     middlewares.unshift(async (req, res, next) => {
@@ -32,6 +34,9 @@ function createEndpoint(
       next();
     });
   }
+
+  //TODO mejorar manejo de cors
+  middlewares.unshift(cors({ origin: envConfig.CORS_URL }));
 
   middlewares = middlewares.map((middleware) => async (req, res, next) => {
     res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
@@ -51,6 +56,7 @@ function initExpressApp(app) {
   app.use(cookieParser());
   app.use(express.json());
   if (envConfig.LOGGING) app.use(morgan('combined'));
+  app.options('*', cors());
 
   //routes
   Object.keys(routes).forEach((method) =>
