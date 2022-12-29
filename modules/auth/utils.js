@@ -4,15 +4,15 @@ const { ERRORS } = require('../../core');
 const jwt = require('jsonwebtoken');
 
 const utils = {
-  getEncryptedPassword: function (password) {
-    return password
+  getEncryptedData: function (data) {
+    return data
       ? createHmac('sha256', envConfig.SECRET_KEY_ENCRYPTION)
-          .update(password)
+          .update(data)
           .digest('base64')
       : undefined;
   },
   comparePassword: function (passwordPlain, hashPassword) {
-    return this.getEncryptedPassword(passwordPlain) === hashPassword;
+    return this.getEncryptedData(passwordPlain) === hashPassword;
   },
   validToken: function (token) {
     if (!token) throw ERRORS.E401;
