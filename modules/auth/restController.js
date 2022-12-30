@@ -8,7 +8,9 @@ class RestController extends DefaultRestController {
   constructor(moduleName) {
     super(moduleName);
     this.createEndpoint('post', '/register', this.register);
-    this.createEndpoint('post', '/login', this.login);
+    this.createEndpoint('post', '/login', this.login, {
+      corsOptions: { credentials: true },
+    });
     this.createEndpoint('get', '/logout', this.logout);
   }
 

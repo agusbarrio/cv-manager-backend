@@ -15,18 +15,22 @@ const _ = require('lodash');
  * @param {(Function|Array.<Function>)} handlers Array of functions (req, res, next) => {...} or function
  * @returns
  */
-function createEndpoint(
-  method,
-  path,
-  handlers = [],
-  options = { needToken: false }
-) {
+function createEndpoint(method, path, handlers = [], options = {}) {
+  const defaultOptions = {
+    needToken: false,
+    corsEnabled: true,
+    corsOptions: {
+      origin: envConfig.CORS_URL,
+    },
+  };
+  const resultOptions = _.merge(defaultOptions, options);
+
   let middlewares = [];
   const context = {};
   if (_.isFunction(handlers)) middlewares.push(handlers);
   if (_.isArray(handlers)) middlewares.push(...handlers);
 
-  if (options.needToken) {
+  if (resultOptions.needToken) {
     middlewares.unshift(async (req, res, next) => {
       const token = req.cookies.token;
       const decodedToken = authUtils.validToken(token);
@@ -34,9 +38,6 @@ function createEndpoint(
       next();
     });
   }
-
-  //TODO mejorar manejo de cors
-  middlewares.unshift(cors({ origin: envConfig.CORS_URL }));
 
   middlewares = middlewares.map((middleware) => async (req, res, next) => {
     res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
@@ -47,7 +48,17 @@ function createEndpoint(
     }
   });
 
-  return routes[method.toLowerCase()].push({ path, middlewares });
+  //TODO mejorar manejo de cors
+  if (resultOptions.corsEnabled) {
+    middlewares.unshift(cors(resultOptions.corsOptions));
+  }
+
+  return routes[method.toLowerCase()].push({
+    path,
+    middlewares,
+    corsEnabled: resultOptions.corsEnabled,
+    corsOptions: resultOptions.corsOptions,
+  });
 }
 
 function initExpressApp(app) {
@@ -56,13 +67,14 @@ function initExpressApp(app) {
   app.use(cookieParser());
   app.use(express.json());
   if (envConfig.LOGGING) app.use(morgan('combined'));
-  app.options('*', cors());
 
   //routes
   Object.keys(routes).forEach((method) =>
-    routes[method].forEach((route) =>
-      app[method]('/api' + route.path, ...route.middlewares)
-    )
+    routes[method].forEach((route) => {
+      const path = '/api' + route.path;
+      if (route.corsEnabled) app.options(path, cors(route.corsOptions));
+      app[method](path, ...route.middlewares);
+    })
   );
 
   // Error handler
