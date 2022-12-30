@@ -10,7 +10,7 @@ const service = {
   register: async function ({ email, password }) {
     const emailAvaible = !(await usersDbService.getOneByEmail(email));
     if (!emailAvaible) throw ERRORS.EMAIL_NOT_AVAIBLE;
-    const encryptedPassword = utils.getEncryptedPassword(password);
+    const encryptedPassword = utils.getEncryptedData(password);
     await usersDbService.create({ email, password: encryptedPassword });
     return true;
   },
