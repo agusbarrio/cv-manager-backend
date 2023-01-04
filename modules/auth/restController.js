@@ -8,10 +8,8 @@ class RestController extends DefaultRestController {
   constructor(moduleName) {
     super(moduleName);
     this.createEndpoint('post', '/register', this.register);
-    this.createEndpoint('post', '/login', this.login, {
-      corsOptions: { credentials: true },
-    });
-    this.createEndpoint('get', '/logout', this.logout);
+    this.createEndpoint('post', '/login', this.login);
+    this.createEndpoint('post', '/logout', this.logout);
   }
 
   register = async (req, res, next) => {
@@ -41,7 +39,7 @@ class RestController extends DefaultRestController {
   };
 
   logout = async (req, res, next, context) => {
-    res.clearCookie('token');
+    res.clearCookie(TOKEN_COOKIE_NAME);
     res.ok();
   };
 }

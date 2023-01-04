@@ -9,6 +9,7 @@ const { envConfig } = require('../config');
 const authUtils = require('../modules/auth/utils');
 const routes = { post: [], put: [], get: [], delete: [] };
 const _ = require('lodash');
+const { TOKEN_COOKIE_NAME } = require('../modules/auth/constants');
 /**
  * @param {String} method get, put, post, delete, etc
  * @param {String} path Ej: "/users"
@@ -21,6 +22,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
     corsEnabled: true,
     corsOptions: {
       origin: envConfig.CORS_URL,
+      credentials: true,
     },
   };
   const resultOptions = _.merge(defaultOptions, options);
@@ -32,10 +34,15 @@ function createEndpoint(method, path, handlers = [], options = {}) {
 
   if (resultOptions.needToken) {
     middlewares.unshift(async (req, res, next) => {
-      const token = req.cookies.token;
-      const decodedToken = authUtils.validToken(token);
-      context.user = { id: decodedToken.id };
-      next();
+      try {
+        const token = req.cookies.token;
+        const decodedToken = authUtils.validToken(token);
+        context.user = { id: decodedToken.data.id };
+        next();
+      } catch (err) {
+        res.clearCookie(TOKEN_COOKIE_NAME);
+        throw ERRORS.E401;
+      }
     });
   }
 
