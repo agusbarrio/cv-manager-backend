@@ -1,3 +1,4 @@
+'use strict ';
 const { createHmac } = require('node:crypto');
 const { envConfig } = require('../../config');
 const { ERRORS } = require('../../core');

@@ -21,7 +21,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
     needToken: false,
     corsEnabled: true,
     corsOptions: {
-      origin: envConfig.CORS_URL,
+      origin: envConfig.FRONTEND_URL,
       credentials: true,
     },
   };

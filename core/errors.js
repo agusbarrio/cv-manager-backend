@@ -31,10 +31,22 @@ module.exports = {
     msg: 'Invalid credentials',
     statusCode: 401,
   },
+  //404
+  EMAIL_NOT_FOUND: {
+    errorCode: 'E404_001',
+    msg: 'Email not found',
+    statusCode: 404,
+  },
   //409
   EMAIL_NOT_AVAIBLE: {
     errorCode: 'E409_001',
     msg: 'Email not avaible',
     statusCode: 409,
+  },
+  //500
+  ERROR_SENDING_EMAIL: {
+    errorCode: 'E500_001',
+    msg: 'Error sending email',
+    statusCode: 500,
   },
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const Yup = require('yup');
 const YupPassword = require('yup-password');

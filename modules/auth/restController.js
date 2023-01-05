@@ -10,6 +10,12 @@ class RestController extends DefaultRestController {
     this.createEndpoint('post', '/register', this.register);
     this.createEndpoint('post', '/login', this.login);
     this.createEndpoint('post', '/logout', this.logout);
+    this.createEndpoint(
+      'post',
+      '/requestPasswordRecovery',
+      this.requestPasswordRecovery
+    );
+    this.createEndpoint('post', '/resetPassword', this.resetPassword);
   }
 
   register = async (req, res, next) => {
@@ -35,11 +41,33 @@ class RestController extends DefaultRestController {
       maxAge: LOGIN_TOKEN_DURATION,
       httpOnly: true,
     });
-    res.json({ token });
+    res.ok();
   };
 
   logout = async (req, res, next, context) => {
     res.clearCookie(TOKEN_COOKIE_NAME);
+    res.ok();
+  };
+
+  requestPasswordRecovery = async (req, res, next, context) => {
+    const { email } = req.body;
+    const schema = validator.createSchema({
+      email: validator.email(),
+    });
+    await validator.validate(schema, { email });
+    await service.requestPasswordRecovery({ email });
+    res.ok();
+  };
+
+  resetPassword = async (req, res, next, context) => {
+    const { password } = req.body;
+    const { token } = req.query;
+    const schema = validator.createSchema({
+      password: validator.password(),
+      token: validator.string(),
+    });
+    await validator.validate(schema, { password, token });
+    await service.resetPassword({ password, token });
     res.ok();
   };
 }

@@ -8,13 +8,11 @@
           "'use strict';",
           "const dbService = require('./dbService');",
           "",
-          "const service = {",
-          "  example: async function () {",
-          "    return await dbService.example();",
-          "  },",
+          "const example = async function () {",
+          "  return await dbService.example();",
           "};",
           "",
-          "module.exports = service;"
+          "module.exports = { example };"
         ]
       }
     ]
