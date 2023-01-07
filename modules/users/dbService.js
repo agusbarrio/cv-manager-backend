@@ -7,12 +7,16 @@ const {
 
 const dbService = {
   create: async function ({ email, password }) {
-    await User.create({ email, password });
-    return true;
+    const user = await User.create({ email, password });
+    return user;
   },
   getOneByEmail: async function (email, attributes = ['id']) {
     const user = await User.findOne({ where: { email }, attributes });
     return user;
+  },
+  editOne: async function (id, dataToEdit) {
+    const count = await User.update(dataToEdit, { where: { id } });
+    return count;
   },
 };
 

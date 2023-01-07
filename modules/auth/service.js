@@ -50,8 +50,17 @@ const requestPasswordRecovery = async ({ email }) => {
   if (!sended) throw ERRORS.ERROR_SENDING_EMAIL;
 };
 
-//TODO completar este servicio
-const resetPassword = async () => {};
+const resetPassword = async ({ password, token }) => {
+  const decodedToken = utils.validToken(token);
+  const userId = decodedToken.data.id;
+  const encryptedPassword = utils.getEncryptedData(password);
+  const count = await usersDbService.editOne(userId, {
+    password: encryptedPassword,
+  });
+  if (count === 0) throw ERRORS.USER_NOT_FOUND;
+  return true;
+};
+
 module.exports = {
   register,
   login,

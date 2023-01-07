@@ -37,6 +37,11 @@ module.exports = {
     msg: 'Email not found',
     statusCode: 404,
   },
+  USER_NOT_FOUND: {
+    errorCode: 'E404_002',
+    msg: 'User not found',
+    statusCode: 404,
+  },
   //409
   EMAIL_NOT_AVAIBLE: {
     errorCode: 'E409_001',

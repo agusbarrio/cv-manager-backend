@@ -60,8 +60,7 @@ class RestController extends DefaultRestController {
   };
 
   resetPassword = async (req, res, next, context) => {
-    const { password } = req.body;
-    const { token } = req.query;
+    const { password, token } = req.body;
     const schema = validator.createSchema({
       password: validator.password(),
       token: validator.string(),
