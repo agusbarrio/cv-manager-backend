@@ -1,5 +1,5 @@
 'use strict';
-const { createEndpoint, sendJSON, sendMessage } = require('./expressConnector');
+const { createEndpoint } = require('./expressConnector');
 class DefaultRestController {
   constructor(moduleName) {
     this.moduleName = moduleName;

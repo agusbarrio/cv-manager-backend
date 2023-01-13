@@ -1,10 +1,11 @@
 'use strict';
 const { dbConnector } = require('../../core');
+const { MODEL_NAME, TABLE_NAME } = require('./constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
   Model = createModel(
-    'User',
+    MODEL_NAME,
     {
       email: {
         type: DataTypes.STRING,
@@ -16,7 +17,7 @@ class DbModel {
         allowNull: false,
       },
     },
-    { tableName: 'users', timestamps: false }
+    { tableName: TABLE_NAME, timestamps: false }
   );
 
   associate(models) {}

@@ -1,5 +1,5 @@
 'use strict';
-module.exports = {
+const ERRORS = {
   //GENERIC ERRORS
 
   //Status errors
@@ -55,3 +55,5 @@ module.exports = {
     statusCode: 500,
   },
 };
+
+module.exports = ERRORS;

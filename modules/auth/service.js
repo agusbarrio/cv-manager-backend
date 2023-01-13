@@ -54,11 +54,10 @@ const resetPassword = async ({ password, token }) => {
   const decodedToken = utils.validToken(token);
   const userId = decodedToken.data.id;
   const encryptedPassword = utils.getEncryptedData(password);
-  const count = await usersDbService.editOne(userId, {
+  const user = await usersDbService.editOne(userId, {
     password: encryptedPassword,
   });
-  if (count === 0) throw ERRORS.USER_NOT_FOUND;
-  return true;
+  return user;
 };
 
 module.exports = {

@@ -14,9 +14,12 @@ const dbService = {
     const user = await User.findOne({ where: { email }, attributes });
     return user;
   },
-  editOne: async function (id, dataToEdit) {
-    const count = await User.update(dataToEdit, { where: { id } });
-    return count;
+  editOne: async (id, newItem) => {
+    const user = await User.updateOne({
+      findOptions: { where: id },
+      newItem,
+    });
+    return user;
   },
 };
 
