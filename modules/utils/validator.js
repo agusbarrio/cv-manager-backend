@@ -39,6 +39,10 @@ const DEFAULT_VALIDATIONS = {
     required: { value: true },
     moreThan: { value: 0 },
   },
+  NAME: {
+    required: { value: true },
+    max: { value: 60 },
+  },
 };
 
 const string = (config = {}) => {
@@ -145,6 +149,12 @@ const id = (_config = {}) => {
   return yupId;
 };
 
+const name = (_config = {}) => {
+  const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.NAME), _config);
+  const yupName = string(config);
+  return yupName;
+};
+
 const createSchema = (schema) => {
   return Yup.object().shape(schema);
 };
@@ -166,4 +176,5 @@ module.exports = {
   date,
   number,
   id,
+  name,
 };

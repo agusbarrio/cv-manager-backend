@@ -19,7 +19,7 @@ const createOneByUser = async (userId, newItem) => {
 const editOneByUser = async (id, userId, dataToUpdate) => {
   const edited = await dbService.editOneByUser(id, userId, dataToUpdate);
   if (!edited) throw ERRORS.E404;
-  return count;
+  return edited;
 };
 const deleteOneByUser = async (id, userId) => {
   const count = await dbService.deleteOneByUser(id, userId);

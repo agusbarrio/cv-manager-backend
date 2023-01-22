@@ -33,7 +33,7 @@ async function updateOne({
   saveOptions = {},
 }) {
   const entity = await Model.findOne(findOptions);
-  if (!entity) throw ERRORS.E404;
+  if (!entity) return null;
   const keys = _.keys(newItem);
   const modelAttributes = _.keys(Model.tableAttributes);
   const keysToUpdate = _.filter(

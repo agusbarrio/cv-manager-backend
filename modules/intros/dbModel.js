@@ -2,19 +2,9 @@
 const { dbConnector } = require('../../core');
 const _ = require('lodash');
 const {
-  EMPLOYMENT_TYPES,
   MODEL_NAME,
   TABLE_NAME,
-  MODEL_ATTRIBUTES: {
-    TITLE,
-    COMPANY_NAME,
-    LOCATION,
-    START_DATE,
-    END_DATE,
-    INDUSTRY,
-    DESCRIPTION,
-    EMPLOYMENT_TYPE,
-  },
+  MODEL_ATTRIBUTES: { FIRST_NAME, LAST_NAME, HEAD_LINE, BIRTHDAY, ABOUT },
 } = require('./constants');
 const { createModel, DataTypes } = dbConnector;
 
@@ -22,26 +12,23 @@ class DbModel {
   Model = createModel(
     MODEL_NAME,
     {
-      [TITLE]: { type: DataTypes.STRING, allowNull: false },
-      [COMPANY_NAME]: {
+      [FIRST_NAME]: { type: DataTypes.STRING, allowNull: false },
+      [LAST_NAME]: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      [LOCATION]: DataTypes.STRING,
-      [START_DATE]: {
-        type: DataTypes.DATEONLY,
+      [HEAD_LINE]: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      [END_DATE]: DataTypes.DATEONLY,
-      [INDUSTRY]: DataTypes.STRING,
-      [DESCRIPTION]: DataTypes.STRING,
-      [EMPLOYMENT_TYPE]: DataTypes.ENUM(_.values(EMPLOYMENT_TYPES)),
+      [BIRTHDAY]: DataTypes.DATEONLY,
+      [ABOUT]: DataTypes.STRING,
     },
     { tableName: TABLE_NAME, timestamps: false }
   );
 
   associate(models) {
-    models.Experience.belongsTo(models.User, {
+    models.Intro.belongsTo(models.User, {
       as: 'user',
       foreignKey: 'userId',
       onDelete: 'cascade',

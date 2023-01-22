@@ -1,26 +1,21 @@
 'use strict';
-
 const {
-  EMPLOYMENT_TYPES,
   TABLE_NAME,
   MODEL_ATTRIBUTES: {
     ID,
-    TITLE,
-    COMPANY_NAME,
-    LOCATION,
-    START_DATE,
-    END_DATE,
-    INDUSTRY,
-    DESCRIPTION,
-    EMPLOYMENT_TYPE,
     USER_ID,
+    FIRST_NAME,
+    LAST_NAME,
+    HEAD_LINE,
+    BIRTHDAY,
+    ABOUT,
   },
-} = require('../modules/experiences/constants');
-const _ = require('lodash');
+} = require('../modules/intros/constants');
 const {
   TABLE_NAME: USERS_TABLE_NAME,
   MODEL_ATTRIBUTES: USER_MODEL_ATTRIBUTES,
 } = require('../modules/users/constants');
+const _ = require('lodash');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -42,33 +37,20 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade',
       },
-      [TITLE]: {
+      [FIRST_NAME]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [COMPANY_NAME]: {
+      [LAST_NAME]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [LOCATION]: {
+      [HEAD_LINE]: {
         type: Sequelize.STRING,
-      },
-      [START_DATE]: {
-        type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      [END_DATE]: {
-        type: Sequelize.DATEONLY,
-      },
-      [INDUSTRY]: {
-        type: Sequelize.STRING,
-      },
-      [DESCRIPTION]: {
-        type: Sequelize.STRING,
-      },
-      [EMPLOYMENT_TYPE]: {
-        type: Sequelize.ENUM(_.values(EMPLOYMENT_TYPES)),
-      },
+      [BIRTHDAY]: Sequelize.DATEONLY,
+      [ABOUT]: Sequelize.STRING,
     });
   },
 
