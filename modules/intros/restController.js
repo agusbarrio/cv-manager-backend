@@ -36,7 +36,7 @@ class RestController extends DefaultRestController {
       lastName: validator.name(),
       headLine: validator.title(),
       birthday: validator.date(),
-      about: validator.description({ required: { value: false } }),
+      about: validator.description(),
     });
 
     const data = await validator.validate(schema, {
@@ -62,7 +62,7 @@ class RestController extends DefaultRestController {
       lastName: validator.name({ required: { value: false } }),
       headLine: validator.title({ required: { value: false } }),
       birthday: validator.date({ required: { value: false } }),
-      about: validator.description({ required: { value: false } }),
+      about: validator.description(),
     });
 
     const data = await validator.validate(schema, {

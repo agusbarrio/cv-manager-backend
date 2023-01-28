@@ -63,6 +63,8 @@ const date = (config = {}) => {
   let yupDate = Yup.date();
   if (config.required && config.required.value) {
     yupDate = yupDate.required();
+  } else {
+    yupDate = yupDate.nullable();
   }
   if (config.min && config.min.value) {
     yupDate = yupDate.min(config.min.value);
