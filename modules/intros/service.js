@@ -26,10 +26,15 @@ const deleteOneByUser = async (id, userId) => {
   if (count === 0) throw ERRORS.E404;
   return count;
 };
+const deleteAllByUser = async (userId) => {
+  const count = await dbService.deleteAllByUser(userId);
+  return count;
+};
 
 module.exports = {
   getAllByUser,
   createOneByUser,
   editOneByUser,
   deleteOneByUser,
+  deleteAllByUser,
 };

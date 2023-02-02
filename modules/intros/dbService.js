@@ -29,6 +29,10 @@ const dbService = {
     const count = await Intro.destroy({ where: { id, userId } });
     return count;
   },
+  deleteAllByUser: async (userId) => {
+    const count = await Intro.destroy({ where: { userId } });
+    return count;
+  },
 };
 
 module.exports = dbService;

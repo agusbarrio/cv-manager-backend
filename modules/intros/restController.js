@@ -19,6 +19,9 @@ class RestController extends DefaultRestController {
     this.createEndpoint('delete', '/:id', this.deleteOne, {
       needToken: true,
     });
+    this.createEndpoint('delete', '/', this.deleteAll, {
+      needToken: true,
+    });
   }
 
   getAll = async (req, res, next, context) => {
@@ -86,6 +89,12 @@ class RestController extends DefaultRestController {
     });
     const data = await validator.validate(schema, { id });
     await service.deleteOneByUser(data.id, userId);
+    res.ok();
+  };
+
+  deleteAll = async (req, res, next, context) => {
+    const userId = context.user.id;
+    await service.deleteAllByUser(userId);
     res.ok();
   };
 }
