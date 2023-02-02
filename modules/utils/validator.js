@@ -33,7 +33,7 @@ const DEFAULT_VALIDATIONS = {
   },
   DESCRIPTION: {
     required: { value: false },
-    max: { value: 500 },
+    max: { value: 255 },
   },
   ID: {
     required: { value: true },
