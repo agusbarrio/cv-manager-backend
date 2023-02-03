@@ -1,5 +1,5 @@
 'use strict ';
-const { createHmac } = require('node:crypto');
+const { createHmac } = require('crypto');
 const { envConfig } = require('../../config');
 const { ERRORS } = require('../../core');
 const jwt = require('jsonwebtoken');
