@@ -19,6 +19,6 @@ module.exports = {
   ), // 1 hour
   COOKIE_HTTP_ONLY: _.get(pe, 'COOKIE_HTTP_ONLY', 'true') === 'true',
   COOKIE_SAME_SITE: _.get(pe, 'COOKIE_SAME_SITE', 'Strict'),
-  COOKIE_SECURE: _.get(pe, 'COOKIE_SAME_SITE', 'true') === 'true',
+  COOKIE_SECURE: _.get(pe, 'COOKIE_SECURE', 'true') === 'true',
   COOKIE_DOMAIN: pe.COOKIE_DOMAIN,
 };
