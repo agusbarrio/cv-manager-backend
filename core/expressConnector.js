@@ -58,6 +58,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
         ...options,
       });
     };
+    res.clearCookie = (key, options) => res.setCookie(key, '', options);
     try {
       await middleware(req, res, next, context);
     } catch (err) {
