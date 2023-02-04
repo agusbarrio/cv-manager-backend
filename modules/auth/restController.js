@@ -1,7 +1,7 @@
 'use strict';
 const { DefaultRestController } = require('../../core');
 const validator = require('../utils/validator');
-const { LOGIN_TOKEN_DURATION, TOKEN_COOKIE_NAME } = require('./constants');
+const { TOKEN_COOKIE_NAME } = require('./constants');
 const service = require('./service');
 
 class RestController extends DefaultRestController {
@@ -37,10 +37,7 @@ class RestController extends DefaultRestController {
     });
     await validator.validate(schema, { email, password });
     const token = await service.login({ email, password });
-    res.cookie(TOKEN_COOKIE_NAME, token, {
-      maxAge: LOGIN_TOKEN_DURATION,
-      httpOnly: true,
-    });
+    res.setCookie(TOKEN_COOKIE_NAME, token);
     res.ok();
   };
 

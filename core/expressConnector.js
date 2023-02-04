@@ -48,6 +48,15 @@ function createEndpoint(method, path, handlers = [], options = {}) {
 
   middlewares = middlewares.map((middleware) => async (req, res, next) => {
     res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
+    res.setCookie = (key, value, options = {}) => {
+      return res.cookie(key, value, {
+        expiresIn: envConfig.COOKIE_EXPIRES_IN_SEG,
+        httpOnly: envConfig.COOKIE_HTTP_ONLY,
+        sameSite: envConfig.COOKIE_SAME_SITE,
+        secure: envConfig.COOKIE_SECURE,
+        ...options,
+      });
+    };
     try {
       await middleware(req, res, next, context);
     } catch (err) {
