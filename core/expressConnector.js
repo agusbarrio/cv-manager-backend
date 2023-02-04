@@ -54,6 +54,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
         httpOnly: envConfig.COOKIE_HTTP_ONLY,
         sameSite: envConfig.COOKIE_SAME_SITE,
         secure: envConfig.COOKIE_SECURE,
+        domain: envConfig.COOKIE_DOMAIN,
         ...options,
       });
     };
