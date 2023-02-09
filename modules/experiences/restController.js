@@ -20,6 +20,9 @@ class RestController extends DefaultRestController {
     this.createEndpoint('delete', '/:id', this.deleteOne, {
       needToken: true,
     });
+    this.createEndpoint('delete', '/', this.deleteAll, {
+      needToken: true,
+    });
   }
 
   getAll = async (req, res, next, context) => {
@@ -47,8 +50,8 @@ class RestController extends DefaultRestController {
       location: validator.title({
         required: { value: false },
       }),
-      startDate: validator.date(),
-      endDate: validator.date({ required: { value: false } }),
+      startDate: validator.date({ required: { value: true } }),
+      endDate: validator.date(),
       industry: validator.title({ required: { value: false } }),
       description: validator.description(),
       employmentType: validator.oneOf(_.values(EMPLOYMENT_TYPES)),
@@ -121,6 +124,11 @@ class RestController extends DefaultRestController {
     });
     await validator.validate(schema, { id });
     await service.deleteOneByUser(id, userId);
+    res.ok();
+  };
+  deleteAll = async (req, res, next, context) => {
+    const userId = context.user.id;
+    await service.deleteAllByUser(userId);
     res.ok();
   };
 }

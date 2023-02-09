@@ -16,12 +16,8 @@ const dbService = {
     return experiences;
   },
   editOneByUser: async (id, userId, newItem) => {
-    const experience = await Experience.updateOne({
-      findOptions: { where: id, userId },
-      newItem,
-    });
-
-    return experience;
+    const result = await Experience.update(newItem, { where: { id, userId } });
+    return result;
   },
   createOneByUser: async (userId, newItem) => {
     const createdItem = await Experience.create({ ...newItem, userId });
@@ -29,6 +25,10 @@ const dbService = {
   },
   deleteOneByUser: async (id, userId) => {
     const count = await Experience.destroy({ where: { id, userId } });
+    return count;
+  },
+  deleteAllByUser: async (userId) => {
+    const count = await Experience.destroy({ where: { userId } });
     return count;
   },
 };

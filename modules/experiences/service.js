@@ -17,13 +17,16 @@ const createOneByUser = async (userId, newItem) => {
   return created;
 };
 const editOneByUser = async (id, userId, dataToUpdate) => {
-  const edited = await dbService.editOneByUser(id, userId, dataToUpdate);
-  if (!edited) throw ERRORS.E404;
-  return count;
+  const result = await dbService.editOneByUser(id, userId, dataToUpdate);
+  return result;
 };
 const deleteOneByUser = async (id, userId) => {
   const count = await dbService.deleteOneByUser(id, userId);
   if (count === 0) throw ERRORS.E404;
+  return count;
+};
+const deleteAllByUser = async (userId) => {
+  const count = await dbService.deleteAllByUser(userId);
   return count;
 };
 
@@ -32,4 +35,5 @@ module.exports = {
   createOneByUser,
   editOneByUser,
   deleteOneByUser,
+  deleteAllByUser,
 };

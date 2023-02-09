@@ -19,36 +19,9 @@ function createModel(table, model, options) {
     freezeTableName: true,
     ...options,
   });
-  Model.updateOne = async ({ findOptions, saveOptions, newItem }) =>
-    await updateOne({ Model, findOptions, saveOptions, newItem });
 
   models[Model.name] = Model;
   return Model;
-}
-
-async function updateOne({
-  Model,
-  newItem,
-  findOptions = {},
-  saveOptions = {},
-}) {
-  const entity = await Model.findOne(findOptions);
-  if (!entity) return null;
-  const keys = _.keys(newItem);
-  const modelAttributes = _.keys(Model.tableAttributes);
-  const keysToUpdate = _.filter(
-    keys,
-    (k) => modelAttributes.includes(k) && entity[k] !== newItem[k]
-  );
-
-  if (keysToUpdate.length > 0) {
-    _.forEach(keysToUpdate, (k) => {
-      entity[k] = newItem[k];
-    });
-    await entity.save(saveOptions);
-  }
-
-  return entity;
 }
 
 function connectDb() {

@@ -15,11 +15,8 @@ const dbService = {
     return user;
   },
   editOne: async (id, newItem) => {
-    const user = await User.updateOne({
-      findOptions: { where: id },
-      newItem,
-    });
-    return user;
+    const result = await User.update(newItem, { where: id });
+    return result;
   },
 };
 

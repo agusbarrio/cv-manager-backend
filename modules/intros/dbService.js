@@ -15,10 +15,7 @@ const dbService = {
     return intros;
   },
   editOneByUser: async (id, userId, newItem) => {
-    const intro = await Intro.updateOne({
-      findOptions: { where: id, userId },
-      newItem,
-    });
+    const intro = await Intro.update(newItem, { where: { id, userId } });
     return intro;
   },
   createOneByUser: async (userId, newItem) => {
