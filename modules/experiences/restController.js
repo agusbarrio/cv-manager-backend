@@ -54,7 +54,7 @@ class RestController extends DefaultRestController {
       endDate: validator.date(),
       industry: validator.title({ required: { value: false } }),
       description: validator.description(),
-      employmentType: validator.oneOf(_.values(EMPLOYMENT_TYPES)),
+      employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
     });
 
     const newItem = {
@@ -95,7 +95,7 @@ class RestController extends DefaultRestController {
       endDate: validator.date({ required: { value: false } }),
       industry: validator.title({ required: { value: false } }),
       description: validator.description({ required: { value: false } }),
-      employmentType: validator.oneOf(_.values(EMPLOYMENT_TYPES), {
+      employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null], {
         required: { value: false },
       }),
     });

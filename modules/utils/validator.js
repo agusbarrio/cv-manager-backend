@@ -49,6 +49,8 @@ const string = (config = {}) => {
   let yupString = Yup.string();
   if (config.required && config.required.value) {
     yupString = yupString.required();
+  } else {
+    yupString = yupString.nullable();
   }
   if (config.min && config.min.value) {
     yupString = yupString.min(config.min.value);
