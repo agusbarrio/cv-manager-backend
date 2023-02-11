@@ -81,6 +81,8 @@ const number = (config = {}) => {
   let yupNumber = Yup.number();
   if (config.required && config.required.value) {
     yupNumber = yupNumber.required();
+  } else {
+    yupNumber = yupNumber.nullable();
   }
   if (config.min && config.min.value) {
     yupNumber = yupNumber.min(config.min.value);
