@@ -4,6 +4,9 @@ const _ = require('lodash');
 const Yup = require('yup');
 const YupPassword = require('yup-password');
 const { ERRORS } = require('../../core');
+const {
+  MODEL_ATTRIBUTES: PROJECT_MODEL_ATTRIBUTES,
+} = require('../projects/constants');
 
 YupPassword(Yup);
 
@@ -42,6 +45,10 @@ const DEFAULT_VALIDATIONS = {
   NAME: {
     required: { value: true },
     max: { value: 60 },
+  },
+  URL: {
+    required: { value: false },
+    max: { value: PROJECT_MODEL_ATTRIBUTES.URL.max },
   },
 };
 
@@ -161,6 +168,12 @@ const name = (_config = {}) => {
   return yupName;
 };
 
+const url = (_config = {}) => {
+  const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.URL, _config));
+  const yupUrl = string(config).url();
+  return yupUrl;
+};
+
 const createSchema = (schema) => {
   return Yup.object().shape(schema);
 };
@@ -183,4 +196,5 @@ module.exports = {
   number,
   id,
   name,
+  url,
 };
