@@ -61,10 +61,10 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      firstName: validator.name({ required: { value: false } }),
-      lastName: validator.name({ required: { value: false } }),
-      headLine: validator.title({ required: { value: false } }),
-      birthday: validator.date({ required: { value: false } }),
+      firstName: validator.name(),
+      lastName: validator.name(),
+      headLine: validator.title(),
+      birthday: validator.date(),
       about: validator.description(),
     });
 

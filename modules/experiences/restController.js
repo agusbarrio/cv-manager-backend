@@ -88,16 +88,16 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      title: validator.title({ required: { value: false } }),
-      companyName: validator.title({ required: { value: false } }),
-      location: validator.title({ required: { value: false } }),
-      startDate: validator.date({ required: { value: false } }),
-      endDate: validator.date({ required: { value: false } }),
-      industry: validator.title({ required: { value: false } }),
-      description: validator.description({ required: { value: false } }),
-      employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null], {
+      title: validator.title(),
+      companyName: validator.title(),
+      location: validator.title({
         required: { value: false },
       }),
+      startDate: validator.date({ required: { value: true } }),
+      endDate: validator.date(),
+      industry: validator.title({ required: { value: false } }),
+      description: validator.description(),
+      employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
     });
 
     const data = await validator.validate(schema, {
