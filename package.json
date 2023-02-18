@@ -9,6 +9,7 @@
     "migrate": "sequelize db:migrate",
     "install:migrate": "npm install && npm run migrate",
     "add-migration": "sequelize migration:generate --name",
+    "migrate-undo": "sequelize db:migrate:undo",
     "dev": "nodemon server.js"
   },
   "repository": {
