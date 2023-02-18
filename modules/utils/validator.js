@@ -3,10 +3,7 @@
 const _ = require('lodash');
 const Yup = require('yup');
 const YupPassword = require('yup-password');
-const { ERRORS } = require('../../core');
-const {
-  MODEL_ATTRIBUTES: PROJECT_MODEL_ATTRIBUTES,
-} = require('../projects/constants');
+const { ERRORS, constants } = require('../../core');
 
 YupPassword(Yup);
 
@@ -48,7 +45,7 @@ const DEFAULT_VALIDATIONS = {
   },
   URL: {
     required: { value: false },
-    max: { value: PROJECT_MODEL_ATTRIBUTES.URL.max },
+    max: { value: constants.URL_MAX_LENGTH },
   },
 };
 
