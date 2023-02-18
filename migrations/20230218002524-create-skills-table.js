@@ -2,16 +2,8 @@
 
 const {
   TABLE_NAME,
-  MODEL_ATTRIBUTES: {
-    ID,
-    NAME,
-    START_DATE,
-    END_DATE,
-    DESCRIPTION,
-    URL,
-    USER_ID,
-  },
-} = require('../modules/projects/constants');
+  MODEL_ATTRIBUTES: { ID, NAME, USER_ID },
+} = require('../modules/skills/constants');
 const _ = require('lodash');
 const {
   TABLE_NAME: USERS_TABLE_NAME,
@@ -41,20 +33,6 @@ module.exports = {
       [NAME.key]: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      [START_DATE.key]: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
-      },
-      [END_DATE.key]: {
-        type: Sequelize.DATEONLY,
-      },
-      [DESCRIPTION.key]: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      [URL.key]: {
-        type: Sequelize.STRING(URL.max),
       },
     });
   },
