@@ -16,6 +16,9 @@ const {
     USER_ID,
   },
 } = require('./constants');
+const {
+  MODEL_ATTRIBUTES: RESUME_EDUCATION_MODEL_ATTRIBUTES,
+} = require('../resumeEducations/constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
@@ -38,6 +41,13 @@ class DbModel {
     models.Education.belongsTo(models.User, {
       as: 'user',
       foreignKey: USER_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Education.belongsToMany(models.Resume, {
+      as: 'resumes',
+      through: models.ResumeEducation,
+      foreignKey: RESUME_EDUCATION_MODEL_ATTRIBUTES.EDUCATION_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

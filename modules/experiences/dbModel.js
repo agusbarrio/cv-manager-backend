@@ -16,6 +16,9 @@ const {
     EMPLOYMENT_TYPE,
   },
 } = require('./constants');
+const {
+  MODEL_ATTRIBUTES: RESUME_EXPERIENCE_MODEL_ATTRIBUTES,
+} = require('../resumeExperiences/constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
@@ -44,6 +47,13 @@ class DbModel {
     models.Experience.belongsTo(models.User, {
       as: 'user',
       foreignKey: 'userId',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Experience.belongsToMany(models.Resume, {
+      as: 'resumes',
+      through: models.ResumeExperience,
+      foreignKey: RESUME_EXPERIENCE_MODEL_ATTRIBUTES.EXPERIENCE_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

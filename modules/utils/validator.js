@@ -38,6 +38,7 @@ const DEFAULT_VALIDATIONS = {
   ID: {
     required: { value: true },
     moreThan: { value: 0 },
+    integer: { value: true },
   },
   NAME: {
     required: { value: true },
@@ -88,11 +89,14 @@ const number = (config = {}) => {
   } else {
     yupNumber = yupNumber.nullable();
   }
+  if (config.integer && config.integer.value) {
+    yupNumber = yupNumber.integer();
+  }
   if (config.min && config.min.value) {
     yupNumber = yupNumber.min(config.min.value);
   }
   if (config.max && config.max.value) {
-    yupNumber = yupNumber.min(config.max.value);
+    yupNumber = yupNumber.max(config.max.value);
   }
   if (config.moreThan && config.moreThan.value) {
     yupNumber = yupNumber.moreThan(config.moreThan.value);
@@ -155,7 +159,7 @@ const oneOf = (values, config = {}) => {
 
 const id = (_config = {}) => {
   const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.ID), _config);
-  const yupId = number(config);
+  const yupId = number(config).integer();
   return yupId;
 };
 
@@ -169,6 +173,15 @@ const url = (_config = {}) => {
   const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.URL, _config));
   const yupUrl = string(config).url();
   return yupUrl;
+};
+
+const array = (_config = {}) => {
+  const yupArray = Yup.array();
+  return yupArray;
+};
+const ids = (_config = {}) => {
+  const yupIds = array().of(id());
+  return yupIds;
 };
 
 const createSchema = (schema) => {
@@ -194,4 +207,6 @@ module.exports = {
   id,
   name,
   url,
+  ids,
+  array,
 };
