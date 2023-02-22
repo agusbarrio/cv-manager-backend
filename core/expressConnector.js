@@ -19,6 +19,7 @@ const { TOKEN_COOKIE_NAME } = require('../modules/auth/constants');
 function createEndpoint(method, path, handlers = [], options = {}) {
   const defaultOptions = {
     needToken: false,
+    needApikey: false,
     corsEnabled: true,
     corsOptions: {
       origin: envConfig.FRONTEND_URL,
@@ -43,6 +44,15 @@ function createEndpoint(method, path, handlers = [], options = {}) {
         res.clearCookie(TOKEN_COOKIE_NAME);
         throw ERRORS.E401;
       }
+    });
+  }
+
+  if (resultOptions.needApikey) {
+    middlewares.unshift(async (req, res, next) => {
+      const apikey = req.headers['authorization'];
+      if (!apikey) throw ERRORS.E401;
+      context.apikey = { id: apikey };
+      next();
     });
   }
 

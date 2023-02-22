@@ -14,6 +14,7 @@ const {
       Education,
       Intro,
       Contact,
+      Apikey,
     },
   },
 } = require('../../core');
@@ -124,6 +125,25 @@ const dbService = {
   deleteAllByUser: async (userId) => {
     const count = await Resume.destroy({ where: { userId } });
     return count;
+  },
+  getByApikey: async (apikeyId) => {
+    const apikey = await Apikey.findByPk(apikeyId, {
+      include: [
+        {
+          model: Resume,
+          as: 'resume',
+          include: [
+            { model: Contact, as: 'contact' },
+            { model: Intro, as: 'intro' },
+            { model: Experience, as: 'experiences' },
+            { model: Skill, as: 'skills' },
+            { model: Education, as: 'educations' },
+            { model: Project, as: 'projects' },
+          ],
+        },
+      ],
+    });
+    return apikey?.resume;
   },
 };
 

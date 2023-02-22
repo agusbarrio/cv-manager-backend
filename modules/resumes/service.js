@@ -78,11 +78,16 @@ const deleteAllByUser = async (userId) => {
   const count = await dbService.deleteAllByUser(userId);
   return count;
 };
+const getByApikey = async (apikeyId) => {
+  const resume = await dbService.getByApikey(apikeyId);
+  return resume;
+};
 
 module.exports = {
   getAllByUser,
   createOneByUser,
   editOneByUser,
   deleteOneByUser,
+  getByApikey,
   deleteAllByUser,
 };
