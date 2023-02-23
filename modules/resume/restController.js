@@ -7,6 +7,9 @@ class RestController extends DefaultRestController {
     super(moduleName);
     this.createEndpoint('get', '/', this.getResumeByApikey, {
       needApikey: true,
+      corsOptions: {
+        origin: '*',
+      },
     });
   }
 
