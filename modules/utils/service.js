@@ -37,9 +37,12 @@ const validUserEntities = async (
   if (result.length !== totalInputEntities) throw ERRORS.E403;
 };
 
-const formatIds = (ids = []) => _.map(ids, (id) => ({ id }));
-
+const updateObj = (obj, newObj = {}) => {
+  _.forEach(_.keys(newObj), (newKey) => {
+    obj[newKey] = newObj[newKey];
+  });
+};
 module.exports = {
   validUserEntities,
-  formatIds,
+  updateObj,
 };

@@ -19,6 +19,9 @@ const {
 const {
   MODEL_ATTRIBUTES: RESUME_EXPERIENCE_MODEL_ATTRIBUTES,
 } = require('../resumeExperiences/constants');
+const {
+  MODEL_ATTRIBUTES: EXPERIENCE_SKILL_MODEL_ATTRIBUTES,
+} = require('../experienceSkills/constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
@@ -54,6 +57,13 @@ class DbModel {
       as: 'resumes',
       through: models.ResumeExperience,
       foreignKey: RESUME_EXPERIENCE_MODEL_ATTRIBUTES.EXPERIENCE_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Experience.belongsToMany(models.Skill, {
+      as: 'skills',
+      through: models.ExperienceSkill,
+      foreignKey: EXPERIENCE_SKILL_MODEL_ATTRIBUTES.EXPERIENCE_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

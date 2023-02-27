@@ -3,7 +3,7 @@ const { DefaultRestController } = require('../../core');
 const service = require('./service');
 const validator = require('../utils/validator');
 const _ = require('lodash');
-
+const utilsService = require('../utils/service');
 class RestController extends DefaultRestController {
   constructor(moduleName) {
     super(moduleName);
@@ -41,6 +41,7 @@ class RestController extends DefaultRestController {
       grade,
       activities,
       description,
+      skillsIds,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -52,9 +53,10 @@ class RestController extends DefaultRestController {
       grade: validator.name({ required: { value: false } }),
       activities: validator.description(),
       description: validator.description(),
+      skillsIds: validator.ids(),
     });
 
-    const newItem = {
+    const newItem = await validator.validate(schema, {
       school,
       degree,
       fieldOfStudy,
@@ -63,8 +65,9 @@ class RestController extends DefaultRestController {
       grade,
       activities,
       description,
-    };
-    await validator.validate(schema, newItem);
+      skillsIds,
+    });
+    await utilsService.validUserEntities(userId, { skillsIds });
     await service.createOneByUser(userId, newItem);
     res.ok();
   };
@@ -81,6 +84,7 @@ class RestController extends DefaultRestController {
       grade,
       activities,
       description,
+      skillsIds,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -93,6 +97,7 @@ class RestController extends DefaultRestController {
       grade: validator.name({ required: { value: false } }),
       activities: validator.description(),
       description: validator.description(),
+      skillsIds: validator.ids(),
     });
 
     const data = await validator.validate(schema, {
@@ -105,8 +110,12 @@ class RestController extends DefaultRestController {
       grade,
       activities,
       description,
+      skillsIds,
     });
-
+    await utilsService.validUserEntities(userId, {
+      skillsIds,
+      educationsIds: [id],
+    });
     await service.editOneByUser(data.id, userId, data);
     res.ok();
   };

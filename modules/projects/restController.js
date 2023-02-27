@@ -3,7 +3,7 @@ const { DefaultRestController } = require('../../core');
 const service = require('./service');
 const validator = require('../utils/validator');
 const _ = require('lodash');
-
+const utilsService = require('../utils/service');
 class RestController extends DefaultRestController {
   constructor(moduleName) {
     super(moduleName);
@@ -32,7 +32,7 @@ class RestController extends DefaultRestController {
 
   createOne = async (req, res, next, context) => {
     const userId = context.user.id;
-    const { name, startDate, endDate, description, url } = req.body;
+    const { name, startDate, endDate, description, url, skillsIds } = req.body;
 
     const schema = validator.createSchema({
       name: validator.name(),
@@ -40,24 +40,28 @@ class RestController extends DefaultRestController {
       endDate: validator.date(),
       description: validator.description({ required: { value: true } }),
       url: validator.url(),
+      skillsIds: validator.ids(),
     });
 
-    const newItem = {
+    const data = await validator.validate(schema, {
       name,
       startDate,
       endDate,
       description,
       url,
-    };
-    await validator.validate(schema, newItem);
-    await service.createOneByUser(userId, newItem);
+      skillsIds,
+    });
+    await utilsService.validUserEntities(userId, {
+      skillsIds,
+    });
+    await service.createOneByUser(userId, data);
     res.ok();
   };
 
   editOne = async (req, res, next, context) => {
     const userId = context.user.id;
     const { id } = req.params;
-    const { name, startDate, endDate, description, url } = req.body;
+    const { name, startDate, endDate, description, url, skillsIds } = req.body;
 
     const schema = validator.createSchema({
       id: validator.id(),
@@ -66,6 +70,7 @@ class RestController extends DefaultRestController {
       endDate: validator.date(),
       description: validator.description({ required: { value: true } }),
       url: validator.url(),
+      skillsIds: validator.ids(),
     });
 
     const data = await validator.validate(schema, {
@@ -75,8 +80,12 @@ class RestController extends DefaultRestController {
       endDate,
       description,
       url,
+      skillsIds,
     });
-
+    await utilsService.validUserEntities(userId, {
+      skillsIds,
+      projectsIds: [id],
+    });
     await service.editOneByUser(data.id, userId, data);
     res.ok();
   };

@@ -9,6 +9,9 @@ const {
 const {
   MODEL_ATTRIBUTES: RESUME_PROJECT_MODEL_ATTRIBUTES,
 } = require('../resumeProjects/constants');
+const {
+  MODEL_ATTRIBUTES: PROJECT_SKILL_MODEL_ATTRIBUTES,
+} = require('../projectSkills/constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
@@ -38,6 +41,13 @@ class DbModel {
       as: 'resumes',
       through: models.ResumeProject,
       foreignKey: RESUME_PROJECT_MODEL_ATTRIBUTES.PROJECT_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Project.belongsToMany(models.Skill, {
+      as: 'skills',
+      through: models.ProjectSkill,
+      foreignKey: PROJECT_SKILL_MODEL_ATTRIBUTES.PROJECT_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

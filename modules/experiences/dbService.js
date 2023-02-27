@@ -1,26 +1,30 @@
 'use strict';
 const {
   dbConnector: {
-    models: { Experience },
+    models: { Experience, Skill },
   },
   ERRORS,
 } = require('../../core');
 const _ = require('lodash');
-
+const utilsService = require('../utils/service');
 const dbService = {
   getAllByUser: async (userId, attributes) => {
     const experiences = await Experience.findAll({
       where: { userId },
       attributes,
+      include: [{ model: Skill, as: 'skills' }],
     });
     return experiences;
   },
-  editOneByUser: async (id, userId, newItem) => {
-    const result = await Experience.update(newItem, { where: { id, userId } });
-    return result;
+  editOneByUser: async (id, userId, { skillsIds = [], ...newItem }) => {
+    const experience = await Experience.findOne({ where: { id, userId } });
+    utilsService.updateObj(experience, newItem);
+    await Promise.all([experience.setSkills(skillsIds), experience.save()]);
+    return experience;
   },
-  createOneByUser: async (userId, newItem) => {
+  createOneByUser: async (userId, { skillsIds = [], ...newItem }) => {
     const createdItem = await Experience.create({ ...newItem, userId });
+    if (!_.isEmpty(skillsIds)) await createdItem.setSkills(skillsIds);
     return createdItem;
   },
   deleteOneByUser: async (id, userId) => {

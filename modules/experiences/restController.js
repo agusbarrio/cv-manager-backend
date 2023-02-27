@@ -4,7 +4,7 @@ const service = require('./service');
 const validator = require('../utils/validator');
 const _ = require('lodash');
 const { EMPLOYMENT_TYPES } = require('./constants');
-
+const utilsService = require('../utils/service');
 class RestController extends DefaultRestController {
   constructor(moduleName) {
     super(moduleName);
@@ -42,6 +42,7 @@ class RestController extends DefaultRestController {
       industry,
       description,
       employmentType,
+      skillsIds,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -55,9 +56,9 @@ class RestController extends DefaultRestController {
       industry: validator.title({ required: { value: false } }),
       description: validator.description(),
       employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
+      skilldsIds: validator.ids(),
     });
-
-    const newItem = {
+    const newItem = await validator.validate(schema, {
       title,
       companyName,
       location,
@@ -66,8 +67,9 @@ class RestController extends DefaultRestController {
       industry,
       description,
       employmentType,
-    };
-    await validator.validate(schema, newItem);
+      skillsIds,
+    });
+    await utilsService.validUserEntities(userId, { skillsIds });
     await service.createOneByUser(userId, newItem);
     res.ok();
   };
@@ -84,6 +86,7 @@ class RestController extends DefaultRestController {
       industry,
       description,
       employmentType,
+      skillsIds,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -98,6 +101,7 @@ class RestController extends DefaultRestController {
       industry: validator.title({ required: { value: false } }),
       description: validator.description(),
       employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
+      skillsIds: validator.ids(),
     });
 
     const data = await validator.validate(schema, {
@@ -110,8 +114,12 @@ class RestController extends DefaultRestController {
       industry,
       description,
       employmentType,
+      skillsIds,
     });
-
+    await utilsService.validUserEntities(userId, {
+      skillsIds,
+      experiencesIds: [id],
+    });
     await service.editOneByUser(data.id, userId, data);
     res.ok();
   };

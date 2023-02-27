@@ -19,6 +19,9 @@ const {
 const {
   MODEL_ATTRIBUTES: RESUME_EDUCATION_MODEL_ATTRIBUTES,
 } = require('../resumeEducations/constants');
+const {
+  MODEL_ATTRIBUTES: EDUCATION_SKILL_MODEL_ATTRIBUTES,
+} = require('../educationSkills/constants');
 const { createModel, DataTypes } = dbConnector;
 
 class DbModel {
@@ -48,6 +51,13 @@ class DbModel {
       as: 'resumes',
       through: models.ResumeEducation,
       foreignKey: RESUME_EDUCATION_MODEL_ATTRIBUTES.EDUCATION_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Education.belongsToMany(models.Skill, {
+      as: 'skills',
+      through: models.EducationSkill,
+      foreignKey: EDUCATION_SKILL_MODEL_ATTRIBUTES.EDUCATION_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

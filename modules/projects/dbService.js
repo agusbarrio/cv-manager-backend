@@ -1,25 +1,30 @@
 'use strict';
 const {
   dbConnector: {
-    models: { Project },
+    models: { Project, Skill },
   },
 } = require('../../core');
 const _ = require('lodash');
+const utilsService = require('../utils/service');
 
 const dbService = {
   getAllByUser: async (userId, attributes) => {
     const projects = await Project.findAll({
       where: { userId },
       attributes,
+      include: [{ model: Skill, as: 'skills' }],
     });
     return projects;
   },
-  editOneByUser: async (id, userId, newItem) => {
-    const result = await Project.update(newItem, { where: { id, userId } });
-    return result;
+  editOneByUser: async (id, userId, { skillsIds = [], ...newItem }) => {
+    const project = await Project.findOne({ where: { id, userId } });
+    utilsService.updateObj(project, newItem);
+    await Promise.all([project.setSkills(skillsIds), project.save()]);
+    return project;
   },
-  createOneByUser: async (userId, newItem) => {
+  createOneByUser: async (userId, { skillsIds = [], ...newItem }) => {
     const createdItem = await Project.create({ ...newItem, userId });
+    if (!_.isEmpty(skillsIds)) await createdItem.setSkills(skillsIds);
     return createdItem;
   },
   deleteOneByUser: async (id, userId) => {
