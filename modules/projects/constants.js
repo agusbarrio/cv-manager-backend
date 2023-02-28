@@ -12,4 +12,6 @@ module.exports.MODEL_ATTRIBUTES = {
   DESCRIPTION: { key: 'description' },
   URL: { key: 'url', max: constants.URL_MAX_LENGTH },
   USER_ID: { key: 'userId' },
+  EXPERIENCE_ID: { key: 'experienceId' },
+  EDUCATION_ID: { key: 'educationId' },
 };

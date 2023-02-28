@@ -1,7 +1,7 @@
 'use strict';
 const {
   dbConnector: {
-    models: { Project, Skill },
+    models: { Project, Skill, Experience, Education },
   },
 } = require('../../core');
 const _ = require('lodash');
@@ -12,7 +12,11 @@ const dbService = {
     const projects = await Project.findAll({
       where: { userId },
       attributes,
-      include: [{ model: Skill, as: 'skills' }],
+      include: [
+        { model: Skill, as: 'skills' },
+        { model: Experience, as: 'experience' },
+        { model: Education, as: 'education' },
+      ],
     });
     return projects;
   },

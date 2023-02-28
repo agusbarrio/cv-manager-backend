@@ -4,7 +4,16 @@ const _ = require('lodash');
 const {
   MODEL_NAME,
   TABLE_NAME,
-  MODEL_ATTRIBUTES: { NAME, START_DATE, END_DATE, DESCRIPTION, URL, USER_ID },
+  MODEL_ATTRIBUTES: {
+    NAME,
+    START_DATE,
+    END_DATE,
+    DESCRIPTION,
+    URL,
+    USER_ID,
+    EXPERIENCE_ID,
+    EDUCATION_ID,
+  },
 } = require('./constants');
 const {
   MODEL_ATTRIBUTES: RESUME_PROJECT_MODEL_ATTRIBUTES,
@@ -48,6 +57,18 @@ class DbModel {
       as: 'skills',
       through: models.ProjectSkill,
       foreignKey: PROJECT_SKILL_MODEL_ATTRIBUTES.PROJECT_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Project.belongsTo(models.Education, {
+      as: 'education',
+      foreignKey: EDUCATION_ID.key,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+    models.Project.belongsTo(models.Experience, {
+      as: 'experience',
+      foreignKey: EXPERIENCE_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

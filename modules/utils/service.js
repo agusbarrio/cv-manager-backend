@@ -6,13 +6,13 @@ const dbService = require('./dbService');
 const validUserEntities = async (
   userId,
   {
-    experiencesIds,
-    contactsIds,
-    educationsIds,
-    projectsIds,
-    introsIds,
-    skillsIds,
-    resumesIds,
+    experiencesIds = [],
+    contactsIds = [],
+    educationsIds = [],
+    projectsIds = [],
+    introsIds = [],
+    skillsIds = [],
+    resumesIds = [],
   }
 ) => {
   const totalInputEntities =

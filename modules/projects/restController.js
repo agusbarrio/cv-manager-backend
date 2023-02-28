@@ -32,7 +32,16 @@ class RestController extends DefaultRestController {
 
   createOne = async (req, res, next, context) => {
     const userId = context.user.id;
-    const { name, startDate, endDate, description, url, skillsIds } = req.body;
+    const {
+      name,
+      startDate,
+      endDate,
+      description,
+      url,
+      skillsIds,
+      experienceId,
+      educationId,
+    } = req.body;
 
     const schema = validator.createSchema({
       name: validator.name(),
@@ -41,6 +50,8 @@ class RestController extends DefaultRestController {
       description: validator.description({ required: { value: true } }),
       url: validator.url(),
       skillsIds: validator.ids(),
+      experienceId: validator.id({ required: { value: false } }),
+      educationId: validator.id({ required: { value: false } }),
     });
 
     const data = await validator.validate(schema, {
@@ -50,9 +61,13 @@ class RestController extends DefaultRestController {
       description,
       url,
       skillsIds,
+      experienceId,
+      educationId,
     });
     await utilsService.validUserEntities(userId, {
       skillsIds,
+      experiencesIds: !!experienceId && [experienceId],
+      educationsIds: !!educationId && [educationId],
     });
     await service.createOneByUser(userId, data);
     res.ok();
@@ -61,7 +76,16 @@ class RestController extends DefaultRestController {
   editOne = async (req, res, next, context) => {
     const userId = context.user.id;
     const { id } = req.params;
-    const { name, startDate, endDate, description, url, skillsIds } = req.body;
+    const {
+      name,
+      startDate,
+      endDate,
+      description,
+      url,
+      skillsIds,
+      experienceId,
+      educationId,
+    } = req.body;
 
     const schema = validator.createSchema({
       id: validator.id(),
@@ -71,6 +95,8 @@ class RestController extends DefaultRestController {
       description: validator.description({ required: { value: true } }),
       url: validator.url(),
       skillsIds: validator.ids(),
+      experienceId: validator.id({ required: { value: false } }),
+      educationId: validator.id({ required: { value: false } }),
     });
 
     const data = await validator.validate(schema, {
@@ -81,10 +107,14 @@ class RestController extends DefaultRestController {
       description,
       url,
       skillsIds,
+      experienceId,
+      educationId,
     });
     await utilsService.validUserEntities(userId, {
       skillsIds,
       projectsIds: [id],
+      experiencesIds: !!experienceId && [experienceId],
+      educationsIds: !!educationId && [educationId],
     });
     await service.editOneByUser(data.id, userId, data);
     res.ok();
