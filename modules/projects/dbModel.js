@@ -13,6 +13,7 @@ const {
     USER_ID,
     EXPERIENCE_ID,
     EDUCATION_ID,
+    IMG_SRC,
   },
 } = require('./constants');
 const {
@@ -35,6 +36,7 @@ class DbModel {
       [END_DATE.key]: DataTypes.DATEONLY,
       [DESCRIPTION.key]: DataTypes.STRING,
       [URL.key]: DataTypes.STRING(URL.max),
+      [IMG_SRC.key]: { type: DataTypes.STRING(IMG_SRC.max) },
     },
     { tableName: TABLE_NAME, timestamps: false }
   );

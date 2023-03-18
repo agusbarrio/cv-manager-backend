@@ -14,6 +14,8 @@ const {
     INDUSTRY,
     DESCRIPTION,
     EMPLOYMENT_TYPE,
+    IMG_SRC,
+    USER_ID,
   },
 } = require('./constants');
 const {
@@ -28,20 +30,21 @@ class DbModel {
   Model = createModel(
     MODEL_NAME,
     {
-      [TITLE]: { type: DataTypes.STRING, allowNull: false },
-      [COMPANY_NAME]: {
+      [TITLE.key]: { type: DataTypes.STRING, allowNull: false },
+      [COMPANY_NAME.key]: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      [LOCATION]: DataTypes.STRING,
-      [START_DATE]: {
+      [LOCATION.key]: DataTypes.STRING,
+      [START_DATE.key]: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      [END_DATE]: DataTypes.DATEONLY,
-      [INDUSTRY]: DataTypes.STRING,
-      [DESCRIPTION]: DataTypes.STRING,
-      [EMPLOYMENT_TYPE]: DataTypes.ENUM(_.values(EMPLOYMENT_TYPES)),
+      [END_DATE.key]: DataTypes.DATEONLY,
+      [INDUSTRY.key]: DataTypes.STRING,
+      [DESCRIPTION.key]: DataTypes.STRING,
+      [EMPLOYMENT_TYPE.key]: DataTypes.ENUM(_.values(EMPLOYMENT_TYPES)),
+      [IMG_SRC.key]: { type: DataTypes.STRING(IMG_SRC.max) },
     },
     { tableName: TABLE_NAME, timestamps: false }
   );
@@ -49,7 +52,7 @@ class DbModel {
   associate(models) {
     models.Experience.belongsTo(models.User, {
       as: 'user',
-      foreignKey: 'userId',
+      foreignKey: USER_ID.key,
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

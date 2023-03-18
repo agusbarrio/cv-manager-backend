@@ -1,15 +1,16 @@
 'use strict';
 
-module.exports = {
-  MODEL_NAME: 'Intro',
-  TABLE_NAME: 'intros',
-  MODEL_ATTRIBUTES: {
-    ID: 'id',
-    FIRST_NAME: 'firstName',
-    LAST_NAME: 'lastName',
-    HEAD_LINE: 'headLine',
-    BIRTHDAY: 'birthday',
-    ABOUT: 'about',
-    USER_ID: 'userId',
-  },
+const { constants } = require('../../core');
+
+module.exports.MODEL_NAME = 'Intro';
+module.exports.TABLE_NAME = 'intros';
+module.exports.MODEL_ATTRIBUTES = {
+  ID: { key: 'id' },
+  FIRST_NAME: { key: 'firstName' },
+  LAST_NAME: { key: 'lastName' },
+  HEAD_LINE: { key: 'headLine' },
+  BIRTHDAY: { key: 'birthday' },
+  ABOUT: { key: 'about' },
+  IMG_SRC: { key: 'imgSrc', max: constants.URL_MAX_LENGTH },
+  USER_ID: { key: 'userId' },
 };

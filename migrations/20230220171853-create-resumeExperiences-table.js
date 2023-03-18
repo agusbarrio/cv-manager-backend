@@ -36,7 +36,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: EXPERIENCES_TABLE_NAME,
-          key: EXPERIENCE_MODEL_ATTRIBUTES.ID,
+          key: EXPERIENCE_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

@@ -4,8 +4,11 @@ const _ = require('lodash');
 const { MODEL_ATTRIBUTES } = require('./constants');
 const dbService = require('./dbService');
 
-const RETURNING_ATTRIBUTES = _.values(MODEL_ATTRIBUTES).filter(
-  (attr) => attr !== MODEL_ATTRIBUTES.USER_ID
+const RETURNING_ATTRIBUTES = _.map(
+  _.values(MODEL_ATTRIBUTES).filter(
+    (attr) => attr.key !== MODEL_ATTRIBUTES.USER_ID.key
+  ),
+  (attr) => attr.key
 );
 
 const getAllByUser = async (userId) => {

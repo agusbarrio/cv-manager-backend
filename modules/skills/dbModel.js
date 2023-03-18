@@ -4,7 +4,7 @@ const _ = require('lodash');
 const {
   MODEL_NAME,
   TABLE_NAME,
-  MODEL_ATTRIBUTES: { NAME, USER_ID },
+  MODEL_ATTRIBUTES: { NAME, IMG_SRC, USER_ID },
 } = require('./constants');
 const {
   MODEL_ATTRIBUTES: RESUME_SKILL_MODEL_ATTRIBUTES,
@@ -26,6 +26,7 @@ class DbModel {
     MODEL_NAME,
     {
       [NAME.key]: { type: DataTypes.STRING, allowNull: false },
+      [IMG_SRC.key]: { type: DataTypes.STRING(IMG_SRC.max) },
     },
     { tableName: TABLE_NAME, timestamps: false }
   );

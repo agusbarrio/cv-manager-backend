@@ -14,5 +14,6 @@ module.exports.MODEL_ATTRIBUTES = {
   GRADE: { key: 'grade' },
   ACTIVITIES: { key: 'activities' },
   DESCRIPTION: { key: 'description' },
+  IMG_SRC: { key: 'imgSrc', max: constants.URL_MAX_LENGTH },
   USER_ID: { key: 'userId' },
 };

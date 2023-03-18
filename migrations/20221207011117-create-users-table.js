@@ -1,21 +1,26 @@
 'use strict';
 
+const {
+  TABLE_NAME,
+  MODEL_ATTRIBUTES: { ID, EMAIL, PASSWORD },
+} = require('../modules/users/constants');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
-      id: {
+    await queryInterface.createTable(TABLE_NAME, {
+      [ID.key]: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      email: {
+      [EMAIL.key]: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      password: {
+      [PASSWORD.key]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -23,6 +28,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable(TABLE_NAME);
   },
 };

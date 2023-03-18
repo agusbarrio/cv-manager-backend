@@ -33,7 +33,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: USERS_TABLE_NAME,
-          key: USER_MODEL_ATTRIBUTES.ID,
+          key: USER_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

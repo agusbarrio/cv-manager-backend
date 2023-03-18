@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: USERS_TABLE_NAME,
-          key: USER_MODEL_ATTRIBUTES.ID,
+          key: USER_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',
@@ -47,7 +47,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: INTROS_TABLE_NAME,
-          key: INTRO_MODEL_ATTRIBUTES.ID,
+          key: INTRO_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

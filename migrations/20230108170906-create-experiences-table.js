@@ -26,47 +26,45 @@ const {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(TABLE_NAME, {
-      [ID]: {
+      [ID.key]: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      [USER_ID]: {
+      [USER_ID.key]: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: USERS_TABLE_NAME,
-          key: USER_MODEL_ATTRIBUTES.ID,
+          key: USER_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',
       },
-      [TITLE]: {
+      [TITLE.key]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [COMPANY_NAME]: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      [LOCATION]: {
+      [COMPANY_NAME.key]: {
         type: Sequelize.STRING,
       },
-      [START_DATE]: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
+      [LOCATION.key]: {
+        type: Sequelize.STRING,
       },
-      [END_DATE]: {
+      [START_DATE.key]: {
         type: Sequelize.DATEONLY,
       },
-      [INDUSTRY]: {
+      [END_DATE.key]: {
+        type: Sequelize.DATEONLY,
+      },
+      [INDUSTRY.key]: {
         type: Sequelize.STRING,
       },
-      [DESCRIPTION]: {
+      [DESCRIPTION.key]: {
         type: Sequelize.STRING,
       },
-      [EMPLOYMENT_TYPE]: {
+      [EMPLOYMENT_TYPE.key]: {
         type: Sequelize.ENUM(_.values(EMPLOYMENT_TYPES)),
       },
     });

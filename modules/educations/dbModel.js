@@ -13,6 +13,7 @@ const {
     GRADE,
     ACTIVITIES,
     DESCRIPTION,
+    IMG_SRC,
     USER_ID,
   },
 } = require('./constants');
@@ -36,6 +37,7 @@ class DbModel {
       [GRADE.key]: { type: DataTypes.STRING },
       [ACTIVITIES.key]: { type: DataTypes.STRING },
       [DESCRIPTION.key]: { type: DataTypes.STRING },
+      [IMG_SRC.key]: { type: DataTypes.STRING(IMG_SRC.max) },
     },
     { tableName: TABLE_NAME, timestamps: false }
   );

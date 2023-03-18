@@ -21,36 +21,36 @@ const _ = require('lodash');
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(TABLE_NAME, {
-      [ID]: {
+      [ID.key]: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      [USER_ID]: {
+      [USER_ID.key]: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: USERS_TABLE_NAME,
-          key: USER_MODEL_ATTRIBUTES.ID,
+          key: USER_MODEL_ATTRIBUTES.ID.key,
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',
       },
-      [FIRST_NAME]: {
+      [FIRST_NAME.key]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [LAST_NAME]: {
+      [LAST_NAME.key]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [HEAD_LINE]: {
+      [HEAD_LINE.key]: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      [BIRTHDAY]: Sequelize.DATEONLY,
-      [ABOUT]: Sequelize.STRING,
+      [BIRTHDAY.key]: Sequelize.DATEONLY,
+      [ABOUT.key]: Sequelize.STRING,
     });
   },
 
