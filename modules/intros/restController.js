@@ -32,7 +32,7 @@ class RestController extends DefaultRestController {
 
   createOne = async (req, res, next, context) => {
     const userId = context.user.id;
-    const { firstName, lastName, headLine, birthday, about } = req.body;
+    const { firstName, lastName, headLine, birthday, about, imgSrc } = req.body;
 
     const schema = validator.createSchema({
       firstName: validator.name(),
@@ -40,6 +40,7 @@ class RestController extends DefaultRestController {
       headLine: validator.title(),
       birthday: validator.date(),
       about: validator.description(),
+      imgSrc: validator.url(),
     });
 
     const data = await validator.validate(schema, {
@@ -48,6 +49,7 @@ class RestController extends DefaultRestController {
       headLine,
       birthday,
       about,
+      imgSrc,
     });
 
     await service.createOneByUser(userId, data);
@@ -57,7 +59,7 @@ class RestController extends DefaultRestController {
   editOne = async (req, res, next, context) => {
     const userId = context.user.id;
     const { id } = req.params;
-    const { firstName, lastName, headLine, birthday, about } = req.body;
+    const { firstName, lastName, headLine, birthday, about, imgSrc } = req.body;
 
     const schema = validator.createSchema({
       id: validator.id(),
@@ -66,6 +68,7 @@ class RestController extends DefaultRestController {
       headLine: validator.title(),
       birthday: validator.date(),
       about: validator.description(),
+      imgSrc: validator.url(),
     });
 
     const data = await validator.validate(schema, {
@@ -75,6 +78,7 @@ class RestController extends DefaultRestController {
       headLine,
       birthday,
       about,
+      imgSrc,
     });
 
     await service.editOneByUser(data.id, userId, data);

@@ -41,6 +41,7 @@ class RestController extends DefaultRestController {
       skillsIds,
       experienceId,
       educationId,
+      imgSrc,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -52,6 +53,7 @@ class RestController extends DefaultRestController {
       skillsIds: validator.ids(),
       experienceId: validator.id({ required: { value: false } }),
       educationId: validator.id({ required: { value: false } }),
+      imgSrc: validator.url(),
     });
 
     const data = await validator.validate(schema, {
@@ -63,6 +65,7 @@ class RestController extends DefaultRestController {
       skillsIds,
       experienceId,
       educationId,
+      imgSrc,
     });
     await utilsService.validUserEntities(userId, {
       skillsIds,
@@ -85,6 +88,7 @@ class RestController extends DefaultRestController {
       skillsIds,
       experienceId,
       educationId,
+      imgSrc,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -97,6 +101,7 @@ class RestController extends DefaultRestController {
       skillsIds: validator.ids(),
       experienceId: validator.id({ required: { value: false } }),
       educationId: validator.id({ required: { value: false } }),
+      imgSrc: validator.url(),
     });
 
     const data = await validator.validate(schema, {
@@ -109,6 +114,7 @@ class RestController extends DefaultRestController {
       skillsIds,
       experienceId,
       educationId,
+      imgSrc,
     });
     await utilsService.validUserEntities(userId, {
       skillsIds,

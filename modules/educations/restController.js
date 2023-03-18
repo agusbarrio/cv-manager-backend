@@ -42,6 +42,7 @@ class RestController extends DefaultRestController {
       activities,
       description,
       skillsIds,
+      imgSrc,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -54,6 +55,7 @@ class RestController extends DefaultRestController {
       activities: validator.description(),
       description: validator.description(),
       skillsIds: validator.ids(),
+      imgSrc: validator.url(),
     });
 
     const newItem = await validator.validate(schema, {
@@ -66,6 +68,7 @@ class RestController extends DefaultRestController {
       activities,
       description,
       skillsIds,
+      imgSrc,
     });
     await utilsService.validUserEntities(userId, { skillsIds });
     await service.createOneByUser(userId, newItem);
@@ -85,6 +88,7 @@ class RestController extends DefaultRestController {
       activities,
       description,
       skillsIds,
+      imgSrc,
     } = req.body;
 
     const schema = validator.createSchema({
@@ -98,6 +102,7 @@ class RestController extends DefaultRestController {
       activities: validator.description(),
       description: validator.description(),
       skillsIds: validator.ids(),
+      imgSrc: validator.url(),
     });
 
     const data = await validator.validate(schema, {
@@ -111,6 +116,7 @@ class RestController extends DefaultRestController {
       activities,
       description,
       skillsIds,
+      imgSrc,
     });
     await utilsService.validUserEntities(userId, {
       skillsIds,

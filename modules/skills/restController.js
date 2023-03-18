@@ -32,11 +32,14 @@ class RestController extends DefaultRestController {
 
   createOne = async (req, res, next, context) => {
     const userId = context.user.id;
-    const { name } = req.body;
+    const { name, imgSrc } = req.body;
 
-    const schema = validator.createSchema({ name: validator.name() });
+    const schema = validator.createSchema({
+      name: validator.name(),
+      imgSrc: validator.url(),
+    });
 
-    const newItem = { name };
+    const newItem = { name, imgSrc };
     await validator.validate(schema, newItem);
     await service.createOneByUser(userId, newItem);
     res.ok();
@@ -45,14 +48,15 @@ class RestController extends DefaultRestController {
   editOne = async (req, res, next, context) => {
     const userId = context.user.id;
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, imgSrc } = req.body;
 
     const schema = validator.createSchema({
       id: validator.id(),
       name: validator.name(),
+      imgSrc: validator.url(),
     });
 
-    const data = await validator.validate(schema, { id, name });
+    const data = await validator.validate(schema, { id, name, imgSrc });
 
     await service.editOneByUser(data.id, userId, data);
     res.ok();
