@@ -20,10 +20,9 @@ class DbModel {
   Model = createModel(
     MODEL_NAME,
     {
-      [FIRST_NAME.key]: { type: DataTypes.STRING, allowNull: false },
+      [FIRST_NAME.key]: { type: DataTypes.STRING },
       [LAST_NAME.key]: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       [HEAD_LINE.key]: {
         type: DataTypes.STRING,

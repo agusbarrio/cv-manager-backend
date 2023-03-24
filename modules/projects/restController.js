@@ -45,10 +45,10 @@ class RestController extends DefaultRestController {
     } = req.body;
 
     const schema = validator.createSchema({
-      name: validator.name(),
-      startDate: validator.date({ required: { value: true } }),
+      name: validator.text({ required: { value: true } }),
+      startDate: validator.date(),
       endDate: validator.date(),
-      description: validator.description({ required: { value: true } }),
+      description: validator.description(),
       url: validator.url(),
       skillsIds: validator.ids(),
       experienceId: validator.id({ required: { value: false } }),
@@ -93,10 +93,10 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      name: validator.name(),
-      startDate: validator.date({ required: { value: true } }),
+      name: validator.text({ required: { value: true } }),
+      startDate: validator.date(),
       endDate: validator.date(),
-      description: validator.description({ required: { value: true } }),
+      description: validator.description(),
       url: validator.url(),
       skillsIds: validator.ids(),
       experienceId: validator.id({ required: { value: false } }),

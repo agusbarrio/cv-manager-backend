@@ -44,7 +44,7 @@ class RestController extends DefaultRestController {
     } = req.body;
 
     const schema = validator.createSchema({
-      title: validator.title(),
+      title: validator.text({ required: { value: true } }),
       contactId: validator.id(),
       introId: validator.id(),
       experiencesIds: validator.ids(),
@@ -87,7 +87,7 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      title: validator.title(),
+      title: validator.text({ required: { value: true } }),
       contactId: validator.id(),
       introId: validator.id(),
       experiencesIds: validator.ids(),

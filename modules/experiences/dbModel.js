@@ -31,15 +31,9 @@ class DbModel {
     MODEL_NAME,
     {
       [TITLE.key]: { type: DataTypes.STRING, allowNull: false },
-      [COMPANY_NAME.key]: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      [COMPANY_NAME.key]: DataTypes.STRING,
       [LOCATION.key]: DataTypes.STRING,
-      [START_DATE.key]: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
+      [START_DATE.key]: DataTypes.DATEONLY,
       [END_DATE.key]: DataTypes.DATEONLY,
       [INDUSTRY.key]: DataTypes.STRING,
       [DESCRIPTION.key]: DataTypes.STRING,

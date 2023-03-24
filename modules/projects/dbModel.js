@@ -29,10 +29,7 @@ class DbModel {
     MODEL_NAME,
     {
       [NAME.key]: { type: DataTypes.STRING, allowNull: false },
-      [START_DATE.key]: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
+      [START_DATE.key]: { type: DataTypes.DATEONLY },
       [END_DATE.key]: DataTypes.DATEONLY,
       [DESCRIPTION.key]: DataTypes.STRING,
       [URL.key]: DataTypes.STRING(URL.max),

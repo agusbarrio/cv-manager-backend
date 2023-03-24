@@ -27,13 +27,13 @@ const DEFAULT_VALIDATIONS = {
   EMAIL: {
     required: { value: true },
   },
-  TITLE: {
-    required: { value: true },
-    max: { value: 140 },
+  TEXT: {
+    required: { value: false },
+    max: { value: 255 },
   },
   DESCRIPTION: {
     required: { value: false },
-    max: { value: 255 },
+    max: { value: 1000 },
   },
   ID: {
     required: { value: true },
@@ -140,10 +140,10 @@ const email = (_config = {}) => {
   return yupEmail;
 };
 
-const title = (_config = {}) => {
-  const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.TITLE), _config);
-  const yupTitle = string(config);
-  return yupTitle;
+const text = (_config = {}) => {
+  const config = _.merge(_.cloneDeep(DEFAULT_VALIDATIONS.TEXT), _config);
+  const yupText = string(config);
+  return yupText;
 };
 
 const description = (_config = {}) => {
@@ -199,7 +199,7 @@ module.exports = {
   string,
   validate,
   createSchema,
-  title,
+  text,
   description,
   oneOf,
   date,

@@ -47,14 +47,12 @@ class RestController extends DefaultRestController {
     } = req.body;
 
     const schema = validator.createSchema({
-      title: validator.title(),
-      companyName: validator.title(),
-      location: validator.title({
-        required: { value: false },
-      }),
-      startDate: validator.date({ required: { value: true } }),
+      title: validator.text({ required: { value: true } }),
+      companyName: validator.text(),
+      location: validator.text(),
+      startDate: validator.date(),
       endDate: validator.date(),
-      industry: validator.title({ required: { value: false } }),
+      industry: validator.text(),
       description: validator.description(),
       employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
       skilldsIds: validator.ids(),
@@ -95,17 +93,15 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      title: validator.title(),
-      companyName: validator.title(),
-      location: validator.title({
-        required: { value: false },
-      }),
-      startDate: validator.date({ required: { value: true } }),
+      title: validator.text({ required: { value: true } }),
+      companyName: validator.text(),
+      location: validator.text(),
+      startDate: validator.date(),
       endDate: validator.date(),
-      industry: validator.title({ required: { value: false } }),
+      industry: validator.text(),
       description: validator.description(),
       employmentType: validator.oneOf([..._.values(EMPLOYMENT_TYPES), null]),
-      skillsIds: validator.ids(),
+      skilldsIds: validator.ids(),
       imgSrc: validator.url(),
     });
 

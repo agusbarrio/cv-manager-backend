@@ -32,7 +32,7 @@ class RestController extends DefaultRestController {
     const { title, resumeId } = req.body;
 
     const schema = validator.createSchema({
-      title: validator.title(),
+      title: validator.text({ required: { value: true } }),
       resumeId: validator.id(),
     });
 
@@ -48,7 +48,7 @@ class RestController extends DefaultRestController {
     const userId = context.user.id;
     const { id } = req.params;
     const schema = validator.createSchema({
-      id: validator.name(),
+      id: validator.id(),
     });
     await validator.validate(schema, { id });
     await service.deleteOneByUser(id, userId);

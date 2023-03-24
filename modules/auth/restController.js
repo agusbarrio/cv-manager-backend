@@ -33,7 +33,7 @@ class RestController extends DefaultRestController {
     const { email, password } = req.body;
     const schema = validator.createSchema({
       email: validator.email(),
-      password: validator.string(),
+      password: validator.text(),
     });
     await validator.validate(schema, { email, password });
     const token = await service.login({ email, password });

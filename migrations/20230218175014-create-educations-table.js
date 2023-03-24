@@ -47,14 +47,12 @@ module.exports = {
       },
       [DEGREE.key]: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       [FIELD_OF_STUDY.key]: {
         type: Sequelize.STRING,
       },
       [START_DATE.key]: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
       },
       [END_DATE.key]: { type: Sequelize.DATEONLY },
       [GRADE.key]: { type: Sequelize.STRING },

@@ -35,7 +35,7 @@ class RestController extends DefaultRestController {
     const { name, imgSrc } = req.body;
 
     const schema = validator.createSchema({
-      name: validator.name(),
+      name: validator.text({ required: { value: true } }),
       imgSrc: validator.url(),
     });
 
@@ -52,7 +52,7 @@ class RestController extends DefaultRestController {
 
     const schema = validator.createSchema({
       id: validator.id(),
-      name: validator.name(),
+      name: validator.text({ required: { value: true } }),
       imgSrc: validator.url(),
     });
 

@@ -39,11 +39,9 @@ module.exports = {
       },
       [FIRST_NAME.key]: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       [LAST_NAME.key]: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       [HEAD_LINE.key]: {
         type: Sequelize.STRING,

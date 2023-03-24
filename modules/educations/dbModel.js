@@ -30,9 +30,9 @@ class DbModel {
     MODEL_NAME,
     {
       [SCHOOL.key]: { type: DataTypes.STRING, allowNull: false },
-      [DEGREE.key]: { type: DataTypes.STRING, allowNull: false },
+      [DEGREE.key]: { type: DataTypes.STRING },
       [FIELD_OF_STUDY.key]: { type: DataTypes.STRING },
-      [START_DATE.key]: { type: DataTypes.DATEONLY, allowNull: false },
+      [START_DATE.key]: { type: DataTypes.DATEONLY },
       [END_DATE.key]: { type: DataTypes.DATEONLY },
       [GRADE.key]: { type: DataTypes.STRING },
       [ACTIVITIES.key]: { type: DataTypes.STRING },

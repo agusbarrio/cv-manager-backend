@@ -44,14 +44,12 @@ module.exports = {
       },
       [START_DATE.key]: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
       },
       [END_DATE.key]: {
         type: Sequelize.DATEONLY,
       },
       [DESCRIPTION.key]: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       [URL.key]: {
         type: Sequelize.STRING(URL.max),
