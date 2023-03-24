@@ -76,7 +76,6 @@ function createEndpoint(method, path, handlers = [], options = {}) {
     }
   });
 
-  //TODO mejorar manejo de cors
   if (resultOptions.corsEnabled) {
     middlewares.unshift(cors(resultOptions.corsOptions));
   }
