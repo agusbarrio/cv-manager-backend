@@ -9,6 +9,7 @@ COPY ./core ./core
 COPY ./migrations ./migrations
 COPY ./modules ./modules
 COPY ./server.js ./server.js
+COPY ./.sequelizerc ./.sequelizerc
 
 # Instala las dependencias
 RUN npm install
