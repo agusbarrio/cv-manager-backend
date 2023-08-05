@@ -6,10 +6,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const ERRORS = require('./errors');
 const { envConfig } = require('../config');
-const authUtils = require('../modules/auth/utils');
+const encryptationServices = require('../modules/encryptation/service');
 const routes = { post: [], put: [], get: [], delete: [] };
 const _ = require('lodash');
-const { TOKEN_COOKIE_NAME } = require('../modules/auth/constants');
+const { TOKEN_COOKIE_NAME } = require('../modules/encryptation/constants');
+
 /**
  * @param {String} method get, put, post, delete, etc
  * @param {String} path Ej: "/users"
@@ -37,7 +38,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
     middlewares.unshift(async (req, res, next) => {
       try {
         const token = req.cookies.token;
-        const decodedToken = authUtils.validToken(token);
+        const decodedToken = encryptationServices.validToken(token);
         context.user = { id: decodedToken.data.id };
         next();
       } catch (err) {

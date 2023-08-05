@@ -24,23 +24,24 @@
   "homepage": "https://github.com/agusbarrio/cv-manager-backend#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "glob": "^8.0.3",
-    "helmet": "^6.0.1",
-    "jsonwebtoken": "^9.0.0",
+    "glob": "^10.3.3",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "mustache": "^4.2.0",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.26.0",
-    "yup": "^0.32.11",
+    "mysql2": "^3.6.0",
+    "sequelize": "^6.32.1",
+    "yup": "^1.2.0",
     "yup-password": "^0.2.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.5.2"
+    "nodemon": "^3.0.1",
+    "sequelize-cli": "^6.6.1"
   }
 }

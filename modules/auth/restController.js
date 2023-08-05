@@ -1,7 +1,8 @@
 'use strict';
 const { DefaultRestController } = require('../../core');
+const { TOKEN_COOKIE_NAME } = require('../encryptation/constants');
 const validator = require('../utils/validator');
-const { TOKEN_COOKIE_NAME } = require('./constants');
+
 const service = require('./service');
 
 class RestController extends DefaultRestController {

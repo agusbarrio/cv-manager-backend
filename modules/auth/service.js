@@ -1,37 +1,23 @@
 'use strict';
-const jwt = require('jsonwebtoken');
 const usersDbService = require('../users/dbService');
-const { TOKEN_DURATION, TOKEN_TYPES } = require('./constants');
 const { ERRORS } = require('../../core');
-const { envConfig } = require('../../config');
-const utils = require('./utils');
+const encryptationServices = require('../encryptation/service');
 const emailsService = require('../emails/service');
 const { EMAIL_TEMPLATES } = require('../emails/constants');
 const _ = require('lodash');
 
-const createToken = (data, type, options = {}) => {
-  const defaultOptions = { expiresIn: TOKEN_DURATION };
-  const tokenOptions = _.merge(defaultOptions, options);
-  return jwt.sign({ data, type }, envConfig.JWT_SECRET, tokenOptions);
-};
-
-const createLoginToken = (userId) =>
-  createToken({ id: userId }, TOKEN_TYPES.LOGIN);
-
-const createRecoverPasswordToken = (userId) =>
-  createToken({ id: userId }, TOKEN_TYPES.RECOVER_PASSWORD);
 
 const register = async function ({ email, password }) {
   const emailAvaible = !(await usersDbService.getOneByEmail(email));
   if (!emailAvaible) throw ERRORS.EMAIL_NOT_AVAIBLE;
-  const encryptedPassword = utils.getEncryptedData(password);
+  const encryptedPassword = encryptationServices.convertTextToHash(password);
   await usersDbService.create({ email, password: encryptedPassword });
   return true;
 };
 const login = async function ({ email, password }) {
   const user = await usersDbService.getOneByEmail(email, ['id', 'password']);
   if (!user) throw ERRORS.INVALID_CREDENTIALS;
-  const isValidPassword = utils.comparePassword(password, user.password);
+  const isValidPassword = encryptationServices.compareTextWithHash(password, user.password);
   if (!isValidPassword) throw ERRORS.INVALID_CREDENTIALS;
   const token = createLoginToken(user.id);
   return token;
@@ -51,9 +37,9 @@ const requestPasswordRecovery = async ({ email }) => {
 };
 
 const resetPassword = async ({ password, token }) => {
-  const decodedToken = utils.validToken(token);
+  const decodedToken = encryptationServices.validToken(token);
   const userId = decodedToken.data.id;
-  const encryptedPassword = utils.getEncryptedData(password);
+  const encryptedPassword = encryptationServices.convertTextToHash(password);
   const result = await usersDbService.editOne(userId, {
     password: encryptedPassword,
   });
