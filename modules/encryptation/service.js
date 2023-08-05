@@ -23,10 +23,10 @@ const encryptationServices = {
         return jwt.sign({ data, type }, envConfig.JWT_SECRET, tokenOptions);
     },
     createLoginToken: (userId) =>
-        createToken({ id: userId }, TOKEN_TYPES.LOGIN),
+        this.createToken({ id: userId }, TOKEN_TYPES.LOGIN),
 
     createRecoverPasswordToken: (userId) =>
-        createToken({ id: userId }, TOKEN_TYPES.RECOVER_PASSWORD),
+        this.createToken({ id: userId }, TOKEN_TYPES.RECOVER_PASSWORD),
 
     validToken: function (token) {
         if (!token) throw ERRORS.E401;
