@@ -19,14 +19,14 @@ const login = async function ({ email, password }) {
   if (!user) throw ERRORS.INVALID_CREDENTIALS;
   const isValidPassword = encryptationServices.compareTextWithHash(password, user.password);
   if (!isValidPassword) throw ERRORS.INVALID_CREDENTIALS;
-  const token = createLoginToken(user.id);
+  const token = encryptationServices.createLoginToken(user.id);
   return token;
 };
 
 const requestPasswordRecovery = async ({ email }) => {
   const user = await usersDbService.getOneByEmail(email);
   if (!user) throw ERRORS.EMAIL_NOT_FOUND;
-  const token = createRecoverPasswordToken(user.id);
+  const token = encryptationServices.createRecoverPasswordToken(user.id);
   const url = emailsService.getResetPasswordUrl(token);
   const template = emailsService.getTemplate(
     EMAIL_TEMPLATES.RECOVER_PASSWORD.key,
@@ -49,8 +49,6 @@ const resetPassword = async ({ password, token }) => {
 module.exports = {
   register,
   login,
-  createToken,
-  createLoginToken,
   requestPasswordRecovery,
   resetPassword,
 };
