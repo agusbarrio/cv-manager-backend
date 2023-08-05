@@ -14,7 +14,7 @@ module.exports = {
   PORT: _.toInteger(_.get(pe, 'PORT', '8080')),
   MYSQL_LOGGING: _.get(pe, 'MYSQL_LOGGING', 'false') === 'true',
   COOKIE_EXPIRES_IN_SEG: _.toInteger(
-    _.get(pe, 'COOKIE_EXPIRES_IN_SEG', 1000 * 60 * 60)
+    _.get(pe, 'COOKIE_EXPIRES_IN_SEG', 3600)
   ), // 1 hour
   COOKIE_HTTP_ONLY: _.get(pe, 'COOKIE_HTTP_ONLY', 'true') === 'true',
   COOKIE_SAME_SITE: _.get(pe, 'COOKIE_SAME_SITE', 'Strict'),
