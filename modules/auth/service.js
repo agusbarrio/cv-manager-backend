@@ -10,14 +10,14 @@ const _ = require('lodash');
 const register = async function ({ email, password }) {
   const emailAvaible = !(await usersDbService.getOneByEmail(email));
   if (!emailAvaible) throw ERRORS.EMAIL_NOT_AVAIBLE;
-  const encryptedPassword = encryptationServices.convertTextToHash(password);
+  const encryptedPassword = await encryptationServices.convertTextToHash(password);
   await usersDbService.create({ email, password: encryptedPassword });
   return true;
 };
 const login = async function ({ email, password }) {
   const user = await usersDbService.getOneByEmail(email, ['id', 'password']);
   if (!user) throw ERRORS.INVALID_CREDENTIALS;
-  const isValidPassword = encryptationServices.compareTextWithHash(password, user.password);
+  const isValidPassword = await encryptationServices.compareTextWithHash(password, user.password);
   if (!isValidPassword) throw ERRORS.INVALID_CREDENTIALS;
   const token = encryptationServices.createLoginToken(user.id);
   return token;
@@ -39,7 +39,7 @@ const requestPasswordRecovery = async ({ email }) => {
 const resetPassword = async ({ password, token }) => {
   const decodedToken = encryptationServices.validToken(token);
   const userId = decodedToken.data.id;
-  const encryptedPassword = encryptationServices.convertTextToHash(password);
+  const encryptedPassword = await encryptationServices.convertTextToHash(password);
   const result = await usersDbService.editOne(userId, {
     password: encryptedPassword,
   });
