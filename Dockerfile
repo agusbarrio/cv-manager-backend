@@ -8,7 +8,7 @@ COPY ./config ./config
 COPY ./core ./core
 COPY ./migrations ./migrations
 COPY ./modules ./modules
-COPY ./index.js ./index.js
+COPY ./server.js ./server.js
 
 # Instala las dependencias
 RUN npm install
