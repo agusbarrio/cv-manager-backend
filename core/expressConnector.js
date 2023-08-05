@@ -61,7 +61,7 @@ function createEndpoint(method, path, handlers = [], options = {}) {
     res.ok = () => res.json({ statusCode: 200, msg: 'Ok' });
     res.setCookie = (key, value, options = {}) => {
       return res.cookie(key, value, {
-        maxAge: envConfig.COOKIE_EXPIRES_IN_SEG,
+        // maxAge: envConfig.COOKIE_EXPIRES_IN_SEG, TODO ver por que no anda bien
         httpOnly: envConfig.COOKIE_HTTP_ONLY,
         sameSite: envConfig.COOKIE_SAME_SITE,
         secure: envConfig.COOKIE_SECURE,
