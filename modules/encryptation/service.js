@@ -22,12 +22,12 @@ const encryptationServices = {
         const tokenOptions = _.merge(defaultOptions, options);
         return jwt.sign({ data, type }, envConfig.JWT_SECRET, tokenOptions);
     },
-    createLoginToken: (userId) =>
-        this.createToken({ id: userId }, TOKEN_TYPES.LOGIN),
-
-    createRecoverPasswordToken: (userId) =>
-        this.createToken({ id: userId }, TOKEN_TYPES.RECOVER_PASSWORD),
-
+    createLoginToken: function (userId) {
+        return this.createToken({ id: userId }, TOKEN_TYPES.LOGIN)
+    },
+    createRecoverPasswordToken: function (userId) {
+        return this.createToken({ id: userId }, TOKEN_TYPES.RECOVER_PASSWORD)
+    },
     validToken: function (token) {
         if (!token) throw ERRORS.E401;
         let decodedToken;
