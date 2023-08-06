@@ -15,7 +15,7 @@ const dbService = {
     return user;
   },
   editOne: async (id, newItem) => {
-    const result = await User.update(newItem, { where: id });
+    const result = await User.update(newItem, { where: { id } });
     return result;
   },
 };
